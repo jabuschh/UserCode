@@ -16,13 +16,21 @@
 using namespace edm;
 using namespace std;
 
-float DeltaR(float eta1,float phi1,float eta2,float phi2)
+float DeltaPhi(float phi1, float phi2)
 {
-	float deltaPhi = TMath::Abs(phi1-phi2);
-	float deltaEta = eta1-eta2;
-	if(deltaPhi > TMath::Pi())
-	deltaPhi = TMath::TwoPi() - deltaPhi;
-	return TMath::Sqrt(deltaEta*deltaEta + deltaPhi*deltaPhi);
+	float dPhi = TMath::Abs(phi1 - phi2);
+	if(dPhi > TMath::Pi())
+	{
+		dPhi = TMath::TwoPi() - dPhi;
+	}
+	return dPhi;
+}
+
+float DeltaR(float eta1, float phi1, float eta2, float phi2)
+{
+	float deltaEta = eta1 - eta2;
+	float deltaPhi = DeltaPhi(phi1, phi2);
+	return TMath::Sqrt(deltaEta * deltaEta + deltaPhi * deltaPhi);
 }
 
 class Analysis_Template_MC : public edm::EDAnalyzer
@@ -36,8 +44,7 @@ class Analysis_Template_MC : public edm::EDAnalyzer
     virtual void analyze(edm::Event const& iEvent, edm::EventSetup const& iSetup);
     virtual void endJob();
     virtual ~Analysis_Template_MC();
-
-
+		
   private:
     //---- configurable parameters --------
     std::string mFileName,mTreeName,mDirName;
@@ -57,12 +64,30 @@ class Analysis_Template_MC : public edm::EDAnalyzer
     //--------- Histogram Declaration --------------------//
     // Vertices
     TH1F *num_of_GenJets;
-    
+
     ///Measurement Det jets
     TH1F *ptGENJet;
     TH1F *yGENJet;
     TH1F *phiGENJet;
 
+		//Measurement LQ
+		TH1F *num_of_S3LQ;
+		TH1F *ptS3LQ;
+		TH1F *phiS3LQ;
+		TH1F *etaS3LQ;
+		TH1F *massS3LQ;
+		TH1F *energyS3LQ;
+
+		//Measurement	muons
+		TH1F *num_of_Mu;
+		TH1F *ptMu;
+		TH1F *phiMu;
+		TH1F *etaMu;
+		TH1F *massMu;
+		TH1F *energyMu;
+
+		//Measurements of deltaR
+		TH1F *deltaRMuJet;
  };
 
 #endif
