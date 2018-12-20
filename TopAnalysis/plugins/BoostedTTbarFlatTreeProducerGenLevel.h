@@ -9,7 +9,7 @@
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
-#include "FWCore/ServiceRegistry/interface/Service.h" 
+#include "FWCore/ServiceRegistry/interface/Service.h"
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 #include "HLTrigger/HLTcore/interface/TriggerExpressionData.h"
@@ -56,7 +56,7 @@
 
 using namespace reco;
 
-class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer 
+class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
 {
   public:
     typedef reco::Particle::LorentzVector LorentzVector;
@@ -68,21 +68,31 @@ class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
     virtual void endJob();
     virtual ~BoostedTTbarFlatTreeProducerGenLevel();
 
-  private:  
+
+
+  private:
     void initialize();
-    //---- configurable parameters --------  
+    //---- configurable parameters --------
     edm::EDGetTokenT<GenJetCollection> genjetsToken;
     edm::EDGetTokenT<GenEventInfoProduct> genEvtInfoToken;
     edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticlesToken;
     edm::EDGetTokenT<edm::View<PileupSummaryInfo> > pupInfoToken;
     edm::EDGetTokenT<LHEEventProduct> lheEvtInfoToken;
- 
+
     double etaMax_,ptMin_,ptMinLeading_,massMin_,btagMin_,minMuPt_,minElPt_,GenetaMax_,GenptMin_;
-    bool   isMC_,isPrint_,saveWeights_,debug_,isHigherOrder_; 
+    bool   isMC_,isPrint_,saveWeights_,debug_,isHigherOrder_;
     //---------------------------------------------------
     edm::Service<TFileService> fs_;
-    TTree *outTree_; 
-    int   run_,evt_,nVtx_,lumi_,nJets_,nBJets_,nLeptons_,nGenJets_,decay_;
+    TTree *outTree_;
+    int run_,evt_,nVtx_,lumi_,nJets_,nBJets_,nLeptons_,nGenJets_,decay_;
+    int nS3LQs_;      //for LQ
+    int nMus_;        //for Muons
+    int nEls_;        //for electrons
+    int nBs_;         //for b quarks
+    double STmu_;
+    double STel_;
+    double STjet_;
+    double MET_;
     double weight_;
 
     int npu_;
@@ -91,13 +101,41 @@ class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
 
     TH1F *EventsHisto_;
     std::vector<float> *GenSubJet1Pt_,*GenSubJet2Pt_,*GenSubJet1Eta_,*GenSubJet2Eta_,*GenSubJet1Phi_,*GenSubJet2Phi_,*GenSubJet1Mass_,*GenSubJet2Mass_,*GenSubJetsDeltaR_,*GenSubJetsMu_;
-    
-    std::vector<int>   *WBosonId_,*WBosonSt_;
-    std::vector<float> *WBosonPt_,*WBosonEta_,*WBosonPhi_,*WBosonE_;
+
+    //for LQ
+    std::vector<int> *S3LQId_;
+    std::vector<int> *S3LQSt_;
+    std::vector<float> *num_of_S3LQ;
+    std::vector<float> *S3LQPt_;
+    std::vector<float> *S3LQPhi_;
+    std::vector<float> *S3LQEta_;
+    std::vector<float> *S3LQE_;
+    std::vector<float> *S3LQM_;
+
+    //for Mu
+    std::vector<int> *MuId_;
+    std::vector<int> *MuSt_;
+    std::vector<float> *num_of_Mu;
+    std::vector<float> *MuPt_;
+    std::vector<float> *MuPhi_;
+    std::vector<float> *MuEta_;
+    std::vector<float> *MuE_;
+    std::vector<float> *MuM_;
+
+    //for El
+    std::vector<int> *ElId_;
+    std::vector<int> *ElSt_;
+    std::vector<float> *num_of_El;
+    std::vector<float> *ElPt_;
+    std::vector<float> *ElPhi_;
+    std::vector<float> *ElEta_;
+    std::vector<float> *ElE_;
+    std::vector<float> *ElM_;
 
     edm::EDGetTokenT<reco::JetFlavourInfoMatchingCollection> jetFlavourInfosToken_;
     //gen jets
     std::vector<float> *GenSoftDropMass_,*GenSoftDropTau32_,*GenSoftDropTau31_,*GenSoftDropTau3_,*GenSoftDropTau1_,*GenSoftDropTau2_;
+    std::vector<float> *num_of_GenJets;
     std::vector<float> *GenJetpt_;
     std::vector<float> *GenJetphi_;
     std::vector<float> *GenJeteta_;
@@ -111,8 +149,8 @@ class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
     edm::Handle<GenEventInfoProduct> genEvtInfo;
     edm::Handle<LHEEventProduct> lheEvtInfo;
     edm::Handle<edm::View<PileupSummaryInfo> > pupInfo;
-    
-    //fastjet                                                                                                                                                                   
+
+    //fastjet
     fastjet::Filter* fTrimmer1;
     fastjet::JetDefinition*       fAKJetDef;
     fastjet::ActiveAreaSpec*      fActiveArea;
