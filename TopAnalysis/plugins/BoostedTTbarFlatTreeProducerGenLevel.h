@@ -88,11 +88,7 @@ class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
     int nS3LQs_;      //for LQ
     int nMus_;        //for Muons
     int nEls_;        //for electrons
-    int nBs_;         //for b quarks
-    double STmu_;
-    double STel_;
-    double STjet_;
-    double MET_;
+    int nNus_;        //for neutrinos
     double weight_;
 
     int npu_;
@@ -131,6 +127,9 @@ class BoostedTTbarFlatTreeProducerGenLevel : public edm::EDAnalyzer
     std::vector<float> *ElEta_;
     std::vector<float> *ElE_;
     std::vector<float> *ElM_;
+
+    //for Nu
+    std::vector<float> *NuPt_;
 
     edm::EDGetTokenT<reco::JetFlavourInfoMatchingCollection> jetFlavourInfosToken_;
     //gen jets
