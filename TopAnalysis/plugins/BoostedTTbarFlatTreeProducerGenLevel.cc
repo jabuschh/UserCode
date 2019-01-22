@@ -60,11 +60,7 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
   outTree_->Branch("nS3LQs"  ,&nS3LQs_  ,"nS3LQs_/I");    	//for LQ
   outTree_->Branch("nMus"    ,&nMus_  	,"nMus_/I");     		//for muons
 	outTree_->Branch("nEls"    ,&nEls_  	,"nEls_/I");     		//for electrons
-	outTree_->Branch("nBs"   	 ,&nBs_  		,"nBs_/I");     			//for b quarks
-	outTree_->Branch("STmu"    ,&STmu_  	,"STmu_/D");
-	outTree_->Branch("STel"    ,&STel_  	,"STel_/D");
-	outTree_->Branch("STjet"   ,&STjet_  	,"STjet_/D");
-	outTree_->Branch("MET"		 ,&MET_  		,"MET_/D");
+	outTree_->Branch("nNus"    ,&nNus_  	,"nNus_/I");     		//for neutrinos
 
   //------------------- MC ---------------------------------
   outTree_->Branch("decay" ,&decay_ ,"decay_/I");
@@ -79,7 +75,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
   S3LQPhi_ = new std::vector<float>;
   S3LQE_   = new std::vector<float>;
   S3LQM_   = new std::vector<float>;
-
   outTree_->Branch("S3LQId"   ,"vector<int>"   ,&S3LQId_);
   outTree_->Branch("S3LQSt"   ,"vector<int>"   ,&S3LQSt_);
   outTree_->Branch("S3LQPt"   ,"vector<float>" ,&S3LQPt_);
@@ -96,7 +91,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
   MuPhi_ = new std::vector<float>;
   MuE_   = new std::vector<float>;
   MuM_   = new std::vector<float>;
-
   outTree_->Branch("MuId"   ,"vector<int>"   ,&MuId_);
   outTree_->Branch("MuSt"   ,"vector<int>"   ,&MuSt_);
   outTree_->Branch("MuPt"   ,"vector<float>" ,&MuPt_);
@@ -113,7 +107,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
 	ElPhi_ = new std::vector<float>;
 	ElE_   = new std::vector<float>;
 	ElM_   = new std::vector<float>;
-
 	outTree_->Branch("ElId"   ,"vector<int>"   ,&ElId_);
 	outTree_->Branch("ElSt"   ,"vector<int>"   ,&ElSt_);
 	outTree_->Branch("ElPt"   ,"vector<float>" ,&ElPt_);
@@ -121,6 +114,10 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
 	outTree_->Branch("ElPhi"  ,"vector<float>" ,&ElPhi_);
 	outTree_->Branch("ElE"    ,"vector<float>" ,&ElE_);
 	outTree_->Branch("ElM"    ,"vector<float>" ,&ElM_);
+
+  //for neutrinos
+  NuPt_  = new std::vector<float>;
+  outTree_->Branch("NuPt"   ,"vector<float>" ,&NuPt_);
 
   //gen jets
   GenSoftDropMass_  = new std::vector<float>;
@@ -136,7 +133,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
   GenJetmass_       = new std::vector<float>;
   isBJetGen_        = new std::vector<bool>;
   isWJetGen_        = new std::vector<bool>;
-
   outTree_->Branch("GenSoftDropMass"       ,"vector<float>"   ,&GenSoftDropMass_);
   outTree_->Branch("GenSoftDropTau32"       ,"vector<float>"   ,&GenSoftDropTau32_);
   outTree_->Branch("GenSoftDropTau31"       ,"vector<float>"   ,&GenSoftDropTau31_);
@@ -150,7 +146,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::beginJob()
   outTree_->Branch("GenJetmass"       ,"vector<float>"   ,&GenJetmass_);
   outTree_->Branch("isBJetGen"       ,"vector<bool>"   ,&isBJetGen_);
   outTree_->Branch("isWJetGen"       ,"vector<bool>"   ,&isWJetGen_);
-
 
 
   GenSubJet1Pt_   = new std::vector<float>;
@@ -202,6 +197,16 @@ void BoostedTTbarFlatTreeProducerGenLevel::endJob()
   delete MuPhi_;
   delete MuE_;
   delete MuM_;
+
+  delete ElSt_;
+  delete ElId_;
+  delete ElPt_;
+  delete ElEta_;
+  delete ElPhi_;
+  delete ElE_;
+  delete ElM_;
+
+  delete NuPt_;
 
   delete GenSoftDropMass_;
   delete GenSoftDropTau32_;
@@ -276,8 +281,6 @@ void BoostedTTbarFlatTreeProducerGenLevel::analyze(edm::Event const& iEvent, edm
 				ElPhi_->push_back(p.phi());
 				ElE_  ->push_back(p.energy());
 				ElM_  ->push_back(p.mass());
-				STel_ += p.pt();
-				//cout << "STel: " << STel_ << '\n';
 			}
 
 			//MUONS
@@ -285,43 +288,61 @@ void BoostedTTbarFlatTreeProducerGenLevel::analyze(edm::Event const& iEvent, edm
       {
         nMus_++;
         MuId_ ->push_back(p.pdgId());
+        //cout << "id of muon:     " << p.pdgId() << '\n';
         MuSt_ ->push_back(p.status());
+        //cout << "status of muon: " << p.status() << '\n';
         MuPt_ ->push_back(p.pt());
         MuEta_->push_back(p.eta());
         MuPhi_->push_back(p.phi());
         MuE_  ->push_back(p.energy());
         MuM_  ->push_back(p.mass());
-				STmu_ += p.pt();
 			}
 
 
 			//LEPTOQUARKS
-      if(abs(p.pdgId()) == 9000005)   //(anti-)leptoquark
+      if(abs(p.pdgId()) == 9000005 && p.status() == 22)   //(anti-)leptoquark from hard scattering
       {
-        //cout << "id of LQ:  " << p.pdgId() << '\n';
         nS3LQs_++;
         S3LQId_ ->push_back(p.pdgId());
+        //cout << "id of LQ:  " << p.pdgId() << '\n';
         S3LQSt_ ->push_back(p.status());
+        //cout << "status of LQ:  " << p.status() << '\n';
         S3LQPt_ ->push_back(p.pt());
+        //cout << "pt of LQ:  " << p.pt() << '\n';
         S3LQEta_->push_back(p.eta());
         S3LQPhi_->push_back(p.phi());
         S3LQE_  ->push_back(p.energy());
         S3LQM_  ->push_back(p.mass());
+
       }
 
 			//NEUTRINOS
 			if(abs(p.pdgId()) == 12 || abs(p.pdgId()) == 14 || abs(p.pdgId()) == 16)	//(anti-)neutrinos
 			{
-				MET_ += p.pt();
+				nNus_++;
+        NuPt_ ->push_back(p.pt());
 			}
 
+      /*
 			//b QUARKS
 			if(abs(p.pdgId()) == 5)
 			{
 				nBs_++;
 				cout << "numberOfBquarks: " << nBs_ << '\n';
 			}
+      */
     } //end of particle loop
+
+    //cout << "new event" << '\n';
+
+    /*
+    //cout << "E of LQ:  " << S3LQE_->front() << '\n';
+    for(int i=0; i<nS3LQs_; i++)
+    {
+      cout << "E of LQ:  " << S3LQE_->at(i) << " (" << S3LQId_->at(i) << ")" << '\n';
+    }
+    */
+
 
 
     iEvent.getByToken(genjetsToken,genjets);
@@ -368,16 +389,11 @@ void BoostedTTbarFlatTreeProducerGenLevel::analyze(edm::Event const& iEvent, edm
       if(i_gen->pt() > GenptMin_ && fabs(i_gen->y()) < GenetaMax_)
       {
 	       nGenJets_++;
-				 STjet_ += i_gen->pt();
          GenJetpt_->push_back(i_gen->pt());
          GenJetphi_->push_back(i_gen->phi());
          GenJeteta_->push_back(i_gen->y());
          GenJetenergy_->push_back(i_gen->energy());
          GenJetmass_->push_back(i_gen->mass());
-
-
-
-
 
          /*
 	       //LQ jet flag
@@ -490,11 +506,7 @@ void BoostedTTbarFlatTreeProducerGenLevel::initialize()
   nS3LQs_   = 0;
   nMus_    	= 0;
 	nEls_ 		= 0;
-	nBs_			= 0;
-	STmu_			= 0.0;
-	STel_			= 0.0;
-	STjet_		= 0.0;
-	MET_			= 0.0;
+	nNus_			= 0;
 
   //----- MC -------
   decay_ = 10;
@@ -517,6 +529,18 @@ void BoostedTTbarFlatTreeProducerGenLevel::initialize()
   MuPhi_->clear();
   MuE_  ->clear();
   MuM_  ->clear();
+
+  //for electrons
+  ElSt_ ->clear();
+  ElId_ ->clear();
+  ElPt_ ->clear();
+  ElEta_->clear();
+  ElPhi_->clear();
+  ElE_  ->clear();
+  ElM_  ->clear();
+
+  //for neutrinos
+  NuPt_ ->clear();
 
   isBJetGen_->clear();
   isWJetGen_->clear();
