@@ -36,15 +36,16 @@ float DeltaR(float eta1, float phi1, float eta2, float phi2)
 class Analysis_Template_MC : public edm::EDAnalyzer
  {
 
-  //typedef reco::Particle::LorentzVector LorentzVector;
+
 
   public:
+		//typedef reco::Particle::LorentzVector LorentzVector;
     explicit Analysis_Template_MC(edm::ParameterSet const& cfg);
     virtual void beginJob();
     virtual void analyze(edm::Event const& iEvent, edm::EventSetup const& iSetup);
     virtual void endJob();
     virtual ~Analysis_Template_MC();
-		
+
   private:
     //---- configurable parameters --------
     std::string mFileName,mTreeName,mDirName;
@@ -88,6 +89,15 @@ class Analysis_Template_MC : public edm::EDAnalyzer
 
 		//Measurements of deltaR
 		TH1F *deltaRMuJet;
+
+		//Measurements of MLQreco and S_T
+		TH1F *CatA_MLQreco;
+		TH1F *CatA_MLQreco_Arne;
+		TH1F *CatB_MLQreco;
+		TH1F *CatA_ST;
+		TH1F *CatA_ST_Arne;
+		TH1F *CatB_ST;
+
  };
 
 #endif
