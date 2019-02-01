@@ -26,17 +26,67 @@ float DeltaPhiFS(float phi1, float phi2)
 	return dPhi;
 }
 
+float DeltaEtaFS(float eta1, float eta2)
+{
+	return eta1 - eta2;
+}
+
 float DeltaRFS(float eta1, float phi1, float eta2, float phi2)
 {
-	float deltaEta = eta1 - eta2;
+	float deltaEta = DeltaEtaFS(eta1,eta2);
 	float deltaPhi = DeltaPhiFS(phi1, phi2);
 	return TMath::Sqrt(deltaEta * deltaEta + deltaPhi * deltaPhi);
 }
 
+vector <TLorentzVector> WbosonReconstruction(TLorentzVector electron_v4, float metPx, float metPy, float MET)
+{
+	vector <TLorentzVector> neutrino_v4;
+
+	const float mass_w = 80.399;
+	float mu = mass_w * mass_w / 2 + electron_v4.Px() * metPx + electron_v4.Py() * metPy;//scalar product between lepton and neutrino
+	float A = - (electron_v4.E() * electron_v4.E());
+	float B = mu * electron_v4.Pz();
+	float C = mu * mu - electron_v4.E() * electron_v4.E() * (MET * MET);
+	float discriminant = B * B - A * C;
+
+	if (0 >= discriminant)
+	{
+		// Take only real part of the solution for pz:
+		TLorentzVector solution;
+		solution.SetPxPyPzE(metPx,metPy,-B / A,0);
+		solution.SetE(solution.P());
+		//neutrino_v4.push_back(solution);
+		solution.SetPxPyPzE(metPx,metPy,-B / A,solution.E());
+		neutrino_v4.push_back(solution);
+	}
+	else
+	{
+		discriminant = sqrt(discriminant);
+		TLorentzVector solution;
+		solution.SetPxPyPzE(metPx,metPy,(-B - discriminant) / A,0);
+		solution.SetE(solution.P());
+		solution.SetPxPyPzE(metPx,metPy,(-B - discriminant) / A,solution.E());
+		neutrino_v4.push_back(solution);
+
+		TLorentzVector solution2;
+		solution2.SetPxPyPzE(metPx,metPy,(-B + discriminant) / A,0);
+		solution2.SetE(solution2.P());
+		solution2.SetPxPyPzE(metPx,metPy,(-B + discriminant) / A,solution2.E());
+		neutrino_v4.push_back(solution2);
+	}
+
+	vector <TLorentzVector> wboson_v4;
+
+	for(unsigned int j=0; j<neutrino_v4.size(); j++)
+	{
+		wboson_v4.push_back(electron_v4+neutrino_v4.at(j));
+	}
+	return wboson_v4;
+}
+
+
 class Analysis_Template_MCFastSim : public edm::EDAnalyzer
 {
-
-
 
 public:
 	//typedef reco::Particle::LorentzVector LorentzVector;
@@ -54,6 +104,9 @@ private:
 	int    mJetID;        // looseID==1 tightID==2
 	int    mprintOk;       // noPrint=0  Print=1
 	bool mIsMCarlo;
+	bool mElSelection;
+	bool mMuSelection;
+	bool mHadSelection;
 	double mCrossSection;
 	double mIntLumi;
 	vector<std::string> mTriggers;
@@ -66,16 +119,31 @@ private:
 	//DET JETS
 	TH1F *nJets;
 	TH1F *jetPt;
+	TH1F *jetPt_hadronFlavorBtag_passed;
+	TH1F *jetPt_hadronFlavorBtagAlgo_passed;
+	TH1F *jetPt_hadronFlavor_total;
+	TH1F *jetPt_Btag_total;
+	TH1F *jetPt_BtagAlgo_total;
 	TH1F *jetEta;
+	TH1F *jetEta_hadronFlavorBtag_passed;
+	TH1F *jetEta_hadronFlavorBtagAlgo_passed;
+	TH1F *jetEta_hadronFlavor_total;
+	TH1F *jetEta_Btag_total;
+	TH1F *jetEta_BtagAlgo_total;
 	TH1F *jetPhi;
-
+	TH1F *jetBtag;
+	TH1F *jetBtagAlgo;
 	//GEN JETS
 	TH1F *nGenJets;
 	TH1F *GenJetPt;
 	TH1F *GenJetPt_passed;
 	TH1F *GenJetPt_total;
 	TH1F *GenJetEta;
+	TH1F *GenJetEta_passed;
+	TH1F *GenJetEta_total;
 	TH1F *GenJetPhi;
+	TH1F *dEta_genJetdetJet;
+	TH1F *PtResolution_jet;
 
 	//GEN LQ
 	TH1F *nLeptoQuarkParticles;
@@ -89,12 +157,34 @@ private:
 	TH1F *muonPt;
 	TH1F *muonPhi;
 	TH1F *muonEta;
-
 	//GEN MUONS
 	TH1F *nMuonParticles;
 	TH1F *MuonParticlePt;
+	TH1F *MuonParticlePt_passed;
+	TH1F *MuonParticlePt_total;
 	TH1F *MuonParticlePhi;
 	TH1F *MuonParticleEta;
+	TH1F *MuonParticleEta_passed;
+	TH1F *MuonParticleEta_total;
+	TH1F *dEta_genMudetMu;
+	TH1F *PtResolution_muon;
+
+	//DET ELECTRONS
+	TH1F *nElecs;
+	TH1F *elecPt;
+	TH1F *elecPhi;
+	TH1F *elecEta;
+	//GEN ELECTRONS
+	TH1F *nElecParticles;
+	TH1F *ElecParticlePt;
+	TH1F *ElecParticlePt_passed;
+	TH1F *ElecParticlePt_total;
+	TH1F *ElecParticlePhi;
+	TH1F *ElecParticleEta;
+	TH1F *ElecParticleEta_passed;
+	TH1F *ElecParticleEta_total;
+	TH1F *dEta_genEldetEl;
+	TH1F *PtResolution_elec;
 
 	//DET TOPS
 	TH1F *nTopParticles;
@@ -107,6 +197,21 @@ private:
 	TH1F *MLQreco_detMu;
 	TH1F *MLQreco_genMu;
 	TH1F *ST;
+
+	//ADDED
+	TH1F *MLQfullreco_detMu;
+	TH1F *WbosonMass;
+
+	TH1F *chi2;
+	TH1F* LeptTopfullreco;
+	TH1F* HadrTopfullreco;
+
+	TH1F* LQHadrMassreco;
+	TH1F* LQLeptMassreco;
+
+	TH1F* JetRes;
+	TH2F* JetRes2D;
+	TH1F* JetResponse;
 };
 
 #endif
