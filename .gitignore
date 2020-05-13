@@ -1,2 +1,12 @@
-.pdf
-.root
+.gitignore
+*.pdf
+*.root
+TopAnalysis/analysis/
+TopAnalysis/cards/
+TopAnalysis/data/
+TopAnalysis/gen_output/
+TopAnalysis/output/
+TpoAnalysis/plots/
+TopAnalysis/prod/
+TopAnalysis/python/
+
