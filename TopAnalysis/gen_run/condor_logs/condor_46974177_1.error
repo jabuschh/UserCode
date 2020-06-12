@@ -1,0 +1,47 @@
+25-May-2020 13:52:35 CEST  Initiating request to open file file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/src/DIM6_linear.root
+25-May-2020 13:52:40 CEST  Successfully opened file file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/src/DIM6_linear.root
+Begin processing the 1st record. Run 1, Event 1, LumiSection 1 at 25-May-2020 13:53:44.525 CEST
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead. (LAST SUCH WARNING)
+----- Begin Fatal Exception 25-May-2020 13:54:16 CEST-----------------------
+An exception of category 'FileWriteError' occurred while
+   [0] Processing  Event run: 1 lumi: 1 event: 266 stream: 0
+   [1] Running path 'p'
+   [2] Calling method for module BoostedTTbarFlatTreeProducerGenLevel/'boosted'
+   [3] Calling IOChannel::write()
+Exception Message:
+write() failed with system error 'Stale file handle' (error code 116)
+----- End Fatal Exception -------------------------------------------------
+25-May-2020 13:54:16 CEST  Closed file file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/src/DIM6_linear.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 Fatal Exception      -s PostProcessPath                        1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 Fatal Exception      1/266                             
+    2 fileAction           PostGlobalEndRun                  
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+System                  4                   4
+
+dropped waiting message count 0
+terminate called after throwing an instance of 'cms::Exception'
+  what():  An exception of category 'FileWriteError' occurred while
+   [0] Calling IOChannel::write()
+Exception Message:
+write() failed with system error 'Stale file handle' (error code 116)
+
+/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/test/submit.sh: line 5: 14396: Abort

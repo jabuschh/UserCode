@@ -49,6 +49,9 @@ private:
   TFile *mInf, *mPuf;
   TDirectoryFile *mDir;
 
+  TString model;
+  TString WilsonCoeff;
+
   /*
   ██████  ███████  ██████ ██       █████  ██████  ███████     ██   ██ ██ ███████ ████████ ███████
   ██   ██ ██      ██      ██      ██   ██ ██   ██ ██          ██   ██ ██ ██         ██    ██
@@ -91,7 +94,7 @@ private:
   TH1F *phi_W;
   TH1F *E_W;
   // EFT weights
-  TH1F *EFTweight_cQq81;
+  TH1F *EFTweight;
 };
 
 #endif

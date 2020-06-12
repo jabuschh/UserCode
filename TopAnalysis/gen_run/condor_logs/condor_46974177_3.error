@@ -1,0 +1,8 @@
+25-May-2020 13:52:53 CEST  Initiating request to open file file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/src/DIM6_linear.root
+25-May-2020 13:53:01 CEST  Successfully opened file file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/src/DIM6_linear.root
+Begin processing the 1st record. Run 1, Event 1, LumiSection 1 at 25-May-2020 13:54:11.002 CEST
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead.
+WARNING from FastJet: Njettiness::createAxesDef:  You are using the old AxesMode way of specifying N-subjettiness axes.  This is deprecated as of v2.1 and will be removed in v3.0.  Please use AxesDefinition instead. (LAST SUCH WARNING)

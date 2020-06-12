@@ -1,0 +1,19 @@
+000 (46974177.001.000) 05/25 13:51:36 Job submitted from host: <131.169.223.41:9618?addrs=131.169.223.41-9618+[2001-638-700-10df--1-29]-9618&noUDP&sock=schedd_2006168_f5e8_3>
+...
+001 (46974177.001.000) 05/25 13:52:00 Job executing on host: <131.169.76.190:41146?addrs=131.169.76.190-41146>
+...
+006 (46974177.001.000) 05/25 13:52:08 Image size of job updated: 1492
+	2  -  MemoryUsage of job (MB)
+	1132  -  ResidentSetSize of job (KB)
+...
+006 (46974177.001.000) 05/25 13:54:17 Image size of job updated: 313668
+	2  -  MemoryUsage of job (MB)
+	1132  -  ResidentSetSize of job (KB)
+...
+012 (46974177.001.000) 05/25 13:54:17 Job was held.
+	The job attribute OnExitHold expression '(ExitCode != 0)' evaluated to UNDEFINED
+	Code 5 Subcode 0
+...
+009 (46974177.001.000) 05/25 13:55:42 Job was aborted by the user.
+	via condor_rm (by user jabuschh)
+...
