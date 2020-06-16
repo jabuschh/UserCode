@@ -4,7 +4,7 @@
   vector<TString> v_WC_name     = {"C_{Qq}^{1,8}","C_{Qq}^{3,8}","C_{tu}^{8}","C_{td}^{8}","C_{Qu}^{8}","C_{Qd}^{8}","C_{tq}^{8}","C_{tG}"};
 
 
-  for(int n=0; n<v_WilsonCoeff.size(); n++){
+  for(int n=0; n<v_WilsonCoeff.size()-1; n++){
 
     TString WilsonCoeff = v_WilsonCoeff.at(n);
     TString WC_name     = v_WC_name.at(n);
@@ -20,13 +20,13 @@
 
     cout << "reading in histograms from root file..." << endl;
     TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/";
-    TFile *rootfile = TFile::Open(dir + "rwgt_" + WilsonCoeff + ".root", "READ");
+    TFile *rootfile = TFile::Open(dir + "SMEFT_" + WilsonCoeff + ".root", "READ");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min5p0"); TH1F* h_EFTweight_min5p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min4p0"); TH1F* h_EFTweight_min4p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_EFTweight_min3p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_EFTweight_min2p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_EFTweight_min1p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_0p0");    TH1F* h_EFTweight_0p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_SM");                         TH1F* h_EFTweight_SM  = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_EFTweight_1p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_EFTweight_2p0 = (TH1F*) gDirectory->Get("EFTweight");
     rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_EFTweight_3p0 = (TH1F*) gDirectory->Get("EFTweight");
@@ -51,7 +51,7 @@
     h_EFTweight_min3p0->Scale(1./(h_EFTweight_min3p0->Integral()));
     h_EFTweight_min2p0->Scale(1./(h_EFTweight_min2p0->Integral()));
     h_EFTweight_min1p0->Scale(1./(h_EFTweight_min1p0->Integral()));
-    h_EFTweight_0p0   ->Scale(1./(h_EFTweight_0p0->Integral()));
+    h_EFTweight_SM    ->Scale(1./(h_EFTweight_SM->Integral()));
     h_EFTweight_1p0   ->Scale(1./(h_EFTweight_1p0->Integral()));
     h_EFTweight_2p0   ->Scale(1./(h_EFTweight_2p0->Integral()));
     h_EFTweight_3p0   ->Scale(1./(h_EFTweight_3p0->Integral()));
@@ -64,7 +64,7 @@
     // h_EFTweight_min3p0->Rebin(4);
     // h_EFTweight_min2p0->Rebin(4);
     // h_EFTweight_min1p0->Rebin(4);
-    // h_EFTweight_0p0   ->Rebin(4);
+    // h_EFTweight_SM    ->Rebin(4);
     // h_EFTweight_1p0   ->Rebin(4);
     // h_EFTweight_2p0   ->Rebin(4);
     // h_EFTweight_3p0   ->Rebin(4);
@@ -76,7 +76,7 @@
     // h_EFTweight_min3p0->SetLineColor(kCyan);
     // h_EFTweight_min2p0->SetLineColor(kBlue+1);
     // h_EFTweight_min1p0->SetLineColor(kBlue);
-    // h_EFTweight_0p0   ->SetLineColor(kBlack);
+    // h_EFTweight_SM   ->SetLineColor(kBlack);
     // h_EFTweight_1p0   ->SetLineColor(kRed);
     // h_EFTweight_2p0   ->SetLineColor(kRed+1);
     // h_EFTweight_3p0   ->SetLineColor(kPink-9);
@@ -88,7 +88,7 @@
     h_EFTweight_min3p0->SetLineColorAlpha(kBlue,0.6);
     h_EFTweight_min2p0->SetLineColorAlpha(kBlue,0.4);
     h_EFTweight_min1p0->SetLineColorAlpha(kBlue,0.2);
-    h_EFTweight_0p0   ->SetLineColor(kBlack);
+    h_EFTweight_SM    ->SetLineColor(kBlack);
     h_EFTweight_1p0   ->SetLineColorAlpha(kRed,0.2);
     h_EFTweight_2p0   ->SetLineColorAlpha(kRed,0.4);
     h_EFTweight_3p0   ->SetLineColorAlpha(kRed,0.6);
@@ -100,7 +100,7 @@
     h_EFTweight_min3p0->SetLineWidth(2);
     h_EFTweight_min2p0->SetLineWidth(2);
     h_EFTweight_min1p0->SetLineWidth(2);
-    h_EFTweight_0p0   ->SetLineWidth(2);
+    h_EFTweight_SM    ->SetLineWidth(2);
     h_EFTweight_1p0   ->SetLineWidth(2);
     h_EFTweight_2p0   ->SetLineWidth(2);
     h_EFTweight_3p0   ->SetLineWidth(2);
@@ -135,7 +135,7 @@
     legend->AddEntry(h_EFTweight_min3p0, WC_name + " = -3.0","l");
     legend->AddEntry(h_EFTweight_min2p0, WC_name + " = -2.0","l");
     legend->AddEntry(h_EFTweight_min1p0, WC_name + " = -1.0","l");
-    legend->AddEntry(h_EFTweight_0p0, WC_name + " = 0.0 (SM)","l");
+    legend->AddEntry(h_EFTweight_SM , WC_name + " = 0.0 (SM)","l");
     legend->AddEntry(h_EFTweight_1p0, WC_name + " = 1.0","l");
     legend->AddEntry(h_EFTweight_2p0, WC_name + " = 2.0","l");
     legend->AddEntry(h_EFTweight_3p0, WC_name + " = 3.0","l");
@@ -153,7 +153,7 @@
     h_EFTweight_3p0   ->Draw("hist same");
     h_EFTweight_4p0   ->Draw("hist same");
     h_EFTweight_5p0   ->Draw("hist same");
-    h_EFTweight_0p0   ->Draw("hist same");
+    h_EFTweight_SM    ->Draw("hist same");
     legend            ->Draw("hist same");
 
     c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/EFTweights_distr_" + WilsonCoeff + ".pdf");

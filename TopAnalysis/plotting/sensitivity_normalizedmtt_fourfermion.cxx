@@ -3,8 +3,104 @@
   vector<TString> v_WilsonCoeff = {"cQq81"       ,"cQq83"       ,"ctu8"      ,"ctd8"      ,"cQu8"      ,"cQd8"      ,"ctq8"      ,"ctG"};
   vector<TString> v_WC_name     = {"C_{Qq}^{1,8}","C_{Qq}^{3,8}","C_{tu}^{8}","C_{td}^{8}","C_{Qu}^{8}","C_{Qd}^{8}","C_{tq}^{8}","C_{tG}"};
 
+  // data from b2g-17-017: lepton + jets (rebinned)
+  cout << "reading in SM data from root files: lepton + jets..." << endl;
+  TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
+  vector<TH1F*> v_hists_ljets;
+  // 1 lep + jets
+  TFile *datafile_1e = TFile::Open(dir + "mtt2017_ljets_1e_outhists.root");
+  TH1F *h_mttbar_ljets_1e = (TH1F*) gDirectory->Get("ele_0top_antiWJetsMVA2_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_1e);
+  TFile *datafile_1m = TFile::Open(dir + "mtt2017_ljets_1m_outhists.root");
+  TH1F *h_mttbar_ljets_1m = (TH1F*) gDirectory->Get("mu_0top_antiWJetsMVA2_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_1m);
+  // 2 lep + jets
+  TFile *datafile_2e = TFile::Open(dir + "mtt2017_ljets_2e_outhists.root");
+  TH1F *h_mttbar_ljets_2e = (TH1F*) gDirectory->Get("ele_0top_antiWJetsMVA3_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_2e);
+  TFile *datafile_2m = TFile::Open(dir + "mtt2017_ljets_2m_outhists.root");
+  TH1F *h_mttbar_ljets_2m = (TH1F*) gDirectory->Get("mu_0top_antiWJetsMVA3_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_2m);
+  // 3 lep + jets
+  TFile *datafile_3e = TFile::Open(dir + "mtt2017_ljets_3e_outhists.root");
+  TH1F *h_mttbar_ljets_3e = (TH1F*) gDirectory->Get("ele_0top_WJetsMVA_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_3e);
+  TFile *datafile_3m = TFile::Open(dir + "mtt2017_ljets_3m_outhists.root");
+  TH1F *h_mttbar_ljets_3m = (TH1F*) gDirectory->Get("mu_0top_WJetsMVA_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_3m);
+  // 4 lep + jets
+  TFile *datafile_4e = TFile::Open(dir + "mtt2017_ljets_4e_outhists.root");
+  TH1F *h_mttbar_ljets_4e = (TH1F*) gDirectory->Get("ele_1top_WJetsMVA_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_4e);
+  TFile *datafile_4m = TFile::Open(dir + "mtt2017_ljets_4m_outhists.root");
+  TH1F *h_mttbar_ljets_4m = (TH1F*) gDirectory->Get("mu_1top_WJetsMVA_chi2_mttbar");
+  v_hists_ljets.push_back(h_mttbar_ljets_4m);
 
-  for(int n=0; n<v_WilsonCoeff.size(); n++){
+  // data from b2g-17-017: dilepton (rebinned)
+  cout << "reading in SM data from root files: dilepton..." << endl;
+  dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
+  vector<TH1F*> v_hists_dilep;
+  // 1ll
+  TFile *datafile_1ee = TFile::Open(dir + "mtt2017_dilep_1ee_outhists.root");
+  TH1F *h_mttbar_dilep_1ee = (TH1F*) gDirectory->Get("eerev");
+  v_hists_dilep.push_back(h_mttbar_dilep_1ee);
+  TFile *datafile_1em = TFile::Open(dir + "mtt2017_dilep_1em_outhists.root");
+  TH1F *h_mttbar_dilep_1em = (TH1F*) gDirectory->Get("emrev");
+  v_hists_dilep.push_back(h_mttbar_dilep_1em);
+  TFile *datafile_1mm = TFile::Open(dir + "mtt2017_dilep_1mm_outhists.root");
+  TH1F *h_mttbar_dilep_1mm = (TH1F*) gDirectory->Get("mmrev");
+  v_hists_dilep.push_back(h_mttbar_dilep_1mm);
+  // 2ll
+  TFile *datafile_2ee = TFile::Open(dir + "mtt2017_dilep_2ee_outhists.root");
+  TH1F *h_mttbar_dilep_2ee = (TH1F*) gDirectory->Get("eenb");
+  v_hists_dilep.push_back(h_mttbar_dilep_2ee);
+  TFile *datafile_2em = TFile::Open(dir + "mtt2017_dilep_2em_outhists.root");
+  TH1F *h_mttbar_dilep_2em = (TH1F*) gDirectory->Get("emnb");
+  v_hists_dilep.push_back(h_mttbar_dilep_2em);
+  TFile *datafile_2mm = TFile::Open(dir + "mtt2017_dilep_2mm_outhists.root");
+  TH1F *h_mttbar_dilep_2mm = (TH1F*) gDirectory->Get("mmnb");
+  v_hists_dilep.push_back(h_mttbar_dilep_2mm);
+  // 2ll
+  TFile *datafile_3ee = TFile::Open(dir + "mtt2017_dilep_3ee_outhists.root");
+  TH1F *h_mttbar_dilep_3ee = (TH1F*) gDirectory->Get("eebt");
+  v_hists_dilep.push_back(h_mttbar_dilep_3ee);
+  TFile *datafile_3em = TFile::Open(dir + "mtt2017_dilep_3em_outhists.root");
+  TH1F *h_mttbar_dilep_3em = (TH1F*) gDirectory->Get("embt");
+  v_hists_dilep.push_back(h_mttbar_dilep_3em);
+  TFile *datafile_3mm = TFile::Open(dir + "mtt2017_dilep_3mm_outhists.root");
+  TH1F *h_mttbar_dilep_3mm = (TH1F*) gDirectory->Get("mmbt");
+  v_hists_dilep.push_back(h_mttbar_dilep_3mm);
+
+  // data from b2g-17-017: hadronic
+  cout << "reading in SM data from root files: hadronic..." << endl;
+  dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
+  vector<TH1F*> v_hists_hadr;
+  // btag0
+  TFile *datafile_btag0 = TFile::Open(dir + "mtt2017_had_btag0_outhists.root");
+  TH1F *h_mttbar_hadr_0 = (TH1F*) gDirectory->Get("btag0");
+  v_hists_hadr.push_back(h_mttbar_hadr_0);
+  // btag1
+  TFile *datafile_btag1 = TFile::Open(dir + "mtt2017_had_btag1_outhists.root");
+  TH1F *h_mttbar_hadr_1 = (TH1F*) gDirectory->Get("btag1");
+  v_hists_hadr.push_back(h_mttbar_hadr_1);
+  // btag2
+  TFile *datafile_btag2 = TFile::Open(dir + "mtt2017_had_btag2_outhists.root");
+  TH1F *h_mttbar_hadr_2 = (TH1F*) gDirectory->Get("btag2");
+  v_hists_hadr.push_back(h_mttbar_hadr_2);
+  // btag3
+  TFile *datafile_btag3 = TFile::Open(dir + "mtt2017_had_btag3_outhists.root");
+  TH1F *h_mttbar_hadr_3 = (TH1F*) gDirectory->Get("btag3");
+  v_hists_hadr.push_back(h_mttbar_hadr_3);
+  // btag4
+  TFile *datafile_btag4 = TFile::Open(dir + "mtt2017_had_btag4_outhists.root");
+  TH1F *h_mttbar_hadr_4 = (TH1F*) gDirectory->Get("btag4");
+  v_hists_hadr.push_back(h_mttbar_hadr_4);
+  // btag5
+  TFile *datafile_btag5 = TFile::Open(dir + "mtt2017_had_btag5_outhists.root");
+  TH1F *h_mttbar_hadr_5 = (TH1F*) gDirectory->Get("btag5");
+  v_hists_hadr.push_back(h_mttbar_hadr_5);
+
+  for(int n=0; n<v_WilsonCoeff.size()-1; n++){
 
     TString WilsonCoeff = v_WilsonCoeff.at(n);
     TString WC_name     = v_WC_name.at(n);
@@ -20,117 +116,19 @@
     */
     cout << "reading in EFT signals from root file..." << endl;
     // EFT signals
-    TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/";
-    TFile *rootfile = TFile::Open(dir + "rwgt_" + WilsonCoeff + ".root", "READ");
+    dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/";
+    TFile *rootfile = TFile::Open(dir + "SMEFT_" + WilsonCoeff + ".root", "READ");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min5p0"); TH1F* h_ditopmass_min5p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min4p0"); TH1F* h_ditopmass_min4p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_ditopmass_min3p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_ditopmass_min2p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_ditopmass_min1p0 = (TH1F*) gDirectory->Get("mass_ditop");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_0p0");    TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
+    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_ditopmass_1p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_ditopmass_2p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_ditopmass_3p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_4p0");    TH1F* h_ditopmass_4p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_5p0");    TH1F* h_ditopmass_5p0    = (TH1F*) gDirectory->Get("mass_ditop");
-    // rootfile->Close();
-
-    // data from b2g-17-017: lepton + jets (rebinned)
-    cout << "reading in SM data from root files: lepton + jets..." << endl;
-    dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
-    vector<TH1F*> v_hists_ljets;
-    // 1 lep + jets
-    TFile *datafile_1e = TFile::Open(dir + "mtt2017_ljets_1e_outhists.root");
-    TH1F *h_mttbar_ljets_1e = (TH1F*) gDirectory->Get("ele_0top_antiWJetsMVA2_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_1e);
-    TFile *datafile_1m = TFile::Open(dir + "mtt2017_ljets_1m_outhists.root");
-    TH1F *h_mttbar_ljets_1m = (TH1F*) gDirectory->Get("mu_0top_antiWJetsMVA2_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_1m);
-    // 2 lep + jets
-    TFile *datafile_2e = TFile::Open(dir + "mtt2017_ljets_2e_outhists.root");
-    TH1F *h_mttbar_ljets_2e = (TH1F*) gDirectory->Get("ele_0top_antiWJetsMVA3_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_2e);
-    TFile *datafile_2m = TFile::Open(dir + "mtt2017_ljets_2m_outhists.root");
-    TH1F *h_mttbar_ljets_2m = (TH1F*) gDirectory->Get("mu_0top_antiWJetsMVA3_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_2m);
-    // 3 lep + jets
-    TFile *datafile_3e = TFile::Open(dir + "mtt2017_ljets_3e_outhists.root");
-    TH1F *h_mttbar_ljets_3e = (TH1F*) gDirectory->Get("ele_0top_WJetsMVA_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_3e);
-    TFile *datafile_3m = TFile::Open(dir + "mtt2017_ljets_3m_outhists.root");
-    TH1F *h_mttbar_ljets_3m = (TH1F*) gDirectory->Get("mu_0top_WJetsMVA_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_3m);
-    // 4 lep + jets
-    TFile *datafile_4e = TFile::Open(dir + "mtt2017_ljets_4e_outhists.root");
-    TH1F *h_mttbar_ljets_4e = (TH1F*) gDirectory->Get("ele_1top_WJetsMVA_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_4e);
-    TFile *datafile_4m = TFile::Open(dir + "mtt2017_ljets_4m_outhists.root");
-    TH1F *h_mttbar_ljets_4m = (TH1F*) gDirectory->Get("mu_1top_WJetsMVA_chi2_mttbar");
-    v_hists_ljets.push_back(h_mttbar_ljets_4m);
-
-    // data from b2g-17-017: dilepton (rebinned)
-    cout << "reading in SM data from root files: dilepton..." << endl;
-    dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
-    vector<TH1F*> v_hists_dilep;
-    // 1ll
-    TFile *datafile_1ee = TFile::Open(dir + "mtt2017_dilep_1ee_outhists.root");
-    TH1F *h_mttbar_dilep_1ee = (TH1F*) gDirectory->Get("eerev");
-    v_hists_dilep.push_back(h_mttbar_dilep_1ee);
-    TFile *datafile_1em = TFile::Open(dir + "mtt2017_dilep_1em_outhists.root");
-    TH1F *h_mttbar_dilep_1em = (TH1F*) gDirectory->Get("emrev");
-    v_hists_dilep.push_back(h_mttbar_dilep_1em);
-    TFile *datafile_1mm = TFile::Open(dir + "mtt2017_dilep_1mm_outhists.root");
-    TH1F *h_mttbar_dilep_1mm = (TH1F*) gDirectory->Get("mmrev");
-    v_hists_dilep.push_back(h_mttbar_dilep_1mm);
-    // 2ll
-    TFile *datafile_2ee = TFile::Open(dir + "mtt2017_dilep_2ee_outhists.root");
-    TH1F *h_mttbar_dilep_2ee = (TH1F*) gDirectory->Get("eenb");
-    v_hists_dilep.push_back(h_mttbar_dilep_2ee);
-    TFile *datafile_2em = TFile::Open(dir + "mtt2017_dilep_2em_outhists.root");
-    TH1F *h_mttbar_dilep_2em = (TH1F*) gDirectory->Get("emnb");
-    v_hists_dilep.push_back(h_mttbar_dilep_2em);
-    TFile *datafile_2mm = TFile::Open(dir + "mtt2017_dilep_2mm_outhists.root");
-    TH1F *h_mttbar_dilep_2mm = (TH1F*) gDirectory->Get("mmnb");
-    v_hists_dilep.push_back(h_mttbar_dilep_2mm);
-    // 2ll
-    TFile *datafile_3ee = TFile::Open(dir + "mtt2017_dilep_3ee_outhists.root");
-    TH1F *h_mttbar_dilep_3ee = (TH1F*) gDirectory->Get("eebt");
-    v_hists_dilep.push_back(h_mttbar_dilep_3ee);
-    TFile *datafile_3em = TFile::Open(dir + "mtt2017_dilep_3em_outhists.root");
-    TH1F *h_mttbar_dilep_3em = (TH1F*) gDirectory->Get("embt");
-    v_hists_dilep.push_back(h_mttbar_dilep_3em);
-    TFile *datafile_3mm = TFile::Open(dir + "mtt2017_dilep_3mm_outhists.root");
-    TH1F *h_mttbar_dilep_3mm = (TH1F*) gDirectory->Get("mmbt");
-    v_hists_dilep.push_back(h_mttbar_dilep_3mm);
-
-    // data from b2g-17-017: hadronic
-    cout << "reading in SM data from root files: hadronic..." << endl;
-    dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
-    vector<TH1F*> v_hists_hadr;
-    // btag0
-    TFile *datafile_btag0 = TFile::Open(dir + "mtt2017_had_btag0_outhists.root");
-    TH1F *h_mttbar_hadr_0 = (TH1F*) gDirectory->Get("btag0");
-    v_hists_hadr.push_back(h_mttbar_hadr_0);
-    // btag1
-    TFile *datafile_btag1 = TFile::Open(dir + "mtt2017_had_btag1_outhists.root");
-    TH1F *h_mttbar_hadr_1 = (TH1F*) gDirectory->Get("btag1");
-    v_hists_hadr.push_back(h_mttbar_hadr_1);
-    // btag2
-    TFile *datafile_btag2 = TFile::Open(dir + "mtt2017_had_btag2_outhists.root");
-    TH1F *h_mttbar_hadr_2 = (TH1F*) gDirectory->Get("btag2");
-    v_hists_hadr.push_back(h_mttbar_hadr_2);
-    // btag3
-    TFile *datafile_btag3 = TFile::Open(dir + "mtt2017_had_btag3_outhists.root");
-    TH1F *h_mttbar_hadr_3 = (TH1F*) gDirectory->Get("btag3");
-    v_hists_hadr.push_back(h_mttbar_hadr_3);
-    // btag4
-    TFile *datafile_btag4 = TFile::Open(dir + "mtt2017_had_btag4_outhists.root");
-    TH1F *h_mttbar_hadr_4 = (TH1F*) gDirectory->Get("btag4");
-    v_hists_hadr.push_back(h_mttbar_hadr_4);
-    // btag5
-    TFile *datafile_btag5 = TFile::Open(dir + "mtt2017_had_btag5_outhists.root");
-    TH1F *h_mttbar_hadr_5 = (TH1F*) gDirectory->Get("btag5");
-    v_hists_hadr.push_back(h_mttbar_hadr_5);
 
 
 
@@ -199,7 +197,18 @@
 
 
 
-
+    // normalizing
+    h_ditopmass_min5p0->Scale(1./(h_ditopmass_min5p0->Integral()));
+    h_ditopmass_min4p0->Scale(1./(h_ditopmass_min4p0->Integral()));
+    h_ditopmass_min3p0->Scale(1./(h_ditopmass_min3p0->Integral()));
+    h_ditopmass_min2p0->Scale(1./(h_ditopmass_min2p0->Integral()));
+    h_ditopmass_min1p0->Scale(1./(h_ditopmass_min1p0->Integral()));
+    h_ditopmass_0p0   ->Scale(1./(h_ditopmass_0p0->Integral()));
+    h_ditopmass_1p0   ->Scale(1./(h_ditopmass_1p0->Integral()));
+    h_ditopmass_2p0   ->Scale(1./(h_ditopmass_2p0->Integral()));
+    h_ditopmass_3p0   ->Scale(1./(h_ditopmass_3p0->Integral()));
+    h_ditopmass_4p0   ->Scale(1./(h_ditopmass_4p0->Integral()));
+    h_ditopmass_5p0   ->Scale(1./(h_ditopmass_5p0->Integral()));
     //rebinning
     h_ditopmass_min5p0->Rebin(5);
     h_ditopmass_min4p0->Rebin(5);
@@ -369,7 +378,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-1.6,1.6);
+    gr_min5p0->GetYaxis()->SetRangeUser(-2.1,2.1);
 
 
 
@@ -426,7 +435,7 @@
 
 
     // break;
-    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/sensitivity_" + WilsonCoeff + ".pdf");
+    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/sensitivity_normalizedmtt_" + WilsonCoeff + ".pdf");
     // break;
     c1->Close();
   }

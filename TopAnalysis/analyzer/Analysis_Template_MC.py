@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 import FWCore.ParameterSet.Config as cms
 
-WilsonCoeff = 'ALP_CaPhi'
+# WilsonCoeff = 'SMEFT_cQd8'
+# WilsonCoeff = 'SMEFT_cQq81'
+# WilsonCoeff = 'SMEFT_cQq83'
+# WilsonCoeff = 'SMEFT_cQu8'
+# WilsonCoeff = 'SMEFT_ctG'
+# WilsonCoeff = 'SMEFT_ctd8'
+# WilsonCoeff = 'SMEFT_ctq8'
+WilsonCoeff = 'SMEFT_ctu8'
 
 process = cms.Process("myprocess")
 process.TFileService=cms.Service("TFileService",fileName=cms.string('file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/' + WilsonCoeff + '.root'))

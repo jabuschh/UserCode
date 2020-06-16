@@ -35,8 +35,15 @@ Analysis_Template_MC::Analysis_Template_MC(edm::ParameterSet const& cfg)
 
 void Analysis_Template_MC::beginJob()
 {
-  model = "ALP_";
-  WilsonCoeff = "CaPhi";
+  model = "SMEFT_";
+  // WilsonCoeff = "cQd8";
+  // WilsonCoeff = "cQq81";
+  // WilsonCoeff = "cQq83";
+  // WilsonCoeff = "cQu8";
+  // WilsonCoeff = "ctG";
+  // WilsonCoeff = "ctd8";
+  // WilsonCoeff = "ctq8";
+  WilsonCoeff = "ctu8";
   cout << "Wilson coefficient: " << model + WilsonCoeff << endl;
   cout << endl;
   cout << "beginning job..." << endl;
@@ -219,19 +226,37 @@ void Analysis_Template_MC::analyze(edm::Event const& iEvent, edm::EventSetup con
   cout << "setting output file: " + output_filename << endl;
   cout << endl;
 
-  vector<TString> v_EFTweightnames = {
-    "rwgt_" + WilsonCoeff + "_min5",  // p0 for EFT
-    "rwgt_" + WilsonCoeff + "_min4",  // p0 for EFT
-    "rwgt_" + WilsonCoeff + "_min3",  // p0 for EFT
-    "rwgt_" + WilsonCoeff + "_min2p0",
-    "rwgt_" + WilsonCoeff + "_min1p0",
-    "rwgt_SM",       // "rwgt_" + WilsonCoeff + "_0p0",
-    "rwgt_" + WilsonCoeff + "_1p0",
-    "rwgt_" + WilsonCoeff + "_2p0",
-    "rwgt_" + WilsonCoeff + "_3p0",
-    "rwgt_" + WilsonCoeff + "_4p0",
-    "rwgt_" + WilsonCoeff + "_5p0"
-  };
+  vector<TString> v_EFTweightnames;
+  if(WilsonCoeff.EqualTo("ctG")){
+    v_EFTweightnames = {
+      "rwgt_" + WilsonCoeff + "_min0p25",
+      "rwgt_" + WilsonCoeff + "_min0p2",
+      "rwgt_" + WilsonCoeff + "_min0p15",
+      "rwgt_" + WilsonCoeff + "_min0p1",
+      "rwgt_" + WilsonCoeff + "_min0p05",
+      "rwgt_SM",
+      "rwgt_" + WilsonCoeff + "_0p05",
+      "rwgt_" + WilsonCoeff + "_0p1",
+      "rwgt_" + WilsonCoeff + "_0p15",
+      "rwgt_" + WilsonCoeff + "_0p2",
+      "rwgt_" + WilsonCoeff + "_0p25"
+    };
+  }
+  else{
+    v_EFTweightnames = {
+      "rwgt_" + WilsonCoeff + "_min5p0",
+      "rwgt_" + WilsonCoeff + "_min4p0",
+      "rwgt_" + WilsonCoeff + "_min3p0",
+      "rwgt_" + WilsonCoeff + "_min2p0",
+      "rwgt_" + WilsonCoeff + "_min1p0",
+      "rwgt_SM",
+      "rwgt_" + WilsonCoeff + "_1p0",
+      "rwgt_" + WilsonCoeff + "_2p0",
+      "rwgt_" + WilsonCoeff + "_3p0",
+      "rwgt_" + WilsonCoeff + "_4p0",
+      "rwgt_" + WilsonCoeff + "_5p0"
+    };
+  }
 
 
 
@@ -257,7 +282,7 @@ void Analysis_Template_MC::analyze(edm::Event const& iEvent, edm::EventSetup con
       double progress = 10.0*i / (1.0*NEntries);
       int k = TMath::FloorNint(progress);
       if(k > decade)
-      cout << "----- "<< 10*k << " %" << " -----" << endl;
+      cout << "-----  "<< 10*k << "%" << " -----" << endl;
       decade = k;
       //reading the event
       mTree->GetEntry(i);
@@ -270,12 +295,12 @@ void Analysis_Template_MC::analyze(edm::Event const& iEvent, edm::EventSetup con
 
 
       // EFT weights
-      float weight_local = -999; //default value fot cross check
+      float weight_local = -99; //default value fot cross check
       for(unsigned int b=0; b<EFTWeightsNames_->size(); b++){
         if(weightName_local.EqualTo(EFTWeightsNames_->at(b))){
           weight_local = EFTWeights_->at(b);
-          // hweight = (1. + weight_local;);   // for EFT
-          hweight = weight_local;              // for ALP
+          hweight = (1. + weight_local);   // for EFT
+          // hweight = weight_local;              // for ALP
           EFTweight->Fill(hweight);
           // cout << "       weightName_local: " << weightName_local << endl;
           // cout << "EFTWeightsNames_->at(b): " << EFTWeightsNames_->at(b) << endl;

@@ -4,7 +4,7 @@
   vector<TString> v_WC_name     = {"C_{Qq}^{1,8}","C_{Qq}^{3,8}","C_{tu}^{8}","C_{td}^{8}","C_{Qu}^{8}","C_{Qd}^{8}","C_{tq}^{8}","C_{tG}"};
 
 
-  for(int n=0; n<v_WilsonCoeff.size(); n++){
+  for(int n=0; n<v_WilsonCoeff.size()-1; n++){
 
     TString WilsonCoeff = v_WilsonCoeff.at(n);
     TString WC_name     = v_WC_name.at(n);
@@ -20,13 +20,13 @@
 
     cout << "reading in histograms from root file..." << endl;
     TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/";
-    TFile *rootfile = TFile::Open(dir + "rwgt_" + WilsonCoeff + ".root", "READ");
+    TFile *rootfile = TFile::Open(dir + "SMEFT_" + WilsonCoeff + ".root", "READ");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min5p0"); TH1F* h_ditopmass_min5p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min4p0"); TH1F* h_ditopmass_min4p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_ditopmass_min3p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_ditopmass_min2p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_ditopmass_min1p0 = (TH1F*) gDirectory->Get("mass_ditop");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_0p0");    TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
+    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_ditopmass_1p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_ditopmass_2p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_ditopmass_3p0    = (TH1F*) gDirectory->Get("mass_ditop");
@@ -127,8 +127,8 @@
     // y axis
     h_ditopmass_min5p0->GetYaxis()->SetTitle("fraction of events");
     h_ditopmass_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    h_ditopmass_min5p0->SetAxisRange(-0.01,0.34,"Y");
-    // gPad->SetLogy();
+    h_ditopmass_min5p0->SetAxisRange(5.0E-06,5.0E-01,"Y");
+    gPad->SetLogy();
 
     //legend
     TLegend* legend;
@@ -172,9 +172,10 @@
     h_ditopmass_5p0   ->Draw("hist same");
     h_ditopmass_0p0   ->Draw("hist same");
     legend            ->Draw("hist same");
-    line              ->Draw();
+    // line              ->Draw();
 
-    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ditopmass_normalized_" + WilsonCoeff + ".pdf");
+    // break;
+    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ditopmass_normalized_logscale_" + WilsonCoeff + ".pdf");
     c1->Close();
   }
 }

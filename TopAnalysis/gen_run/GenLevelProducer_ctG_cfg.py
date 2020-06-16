@@ -5,7 +5,7 @@ WilsonCoeff = 'ctG'
 
 process = cms.Process('myprocess')
 
-process.TFileService=cms.Service("TFileService",fileName=cms.string('/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/gen_output/rwgt_' + WilsonCoeff + '.root'))
+process.TFileService=cms.Service("TFileService",fileName=cms.string('/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/gen_output/SMEFT_' + WilsonCoeff + '.root'))
 
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
@@ -34,17 +34,17 @@ process.boosted = cms.EDAnalyzer('BoostedTTbarFlatTreeProducerGenLevel',
   isPrint         = cms.untracked.bool(True),
   isHigherOrder   = cms.untracked.bool(True),
   EFT_weights     = cms.untracked.vstring(
-    "rwgt_" + WilsonCoeff + "_min5p0",
-    "rwgt_" + WilsonCoeff + "_min4p0",
-    "rwgt_" + WilsonCoeff + "_min3p0",
-    "rwgt_" + WilsonCoeff + "_min2p0",
-    "rwgt_" + WilsonCoeff + "_min1p0",
-    "rwgt_" + WilsonCoeff + "_0p0",
-    "rwgt_" + WilsonCoeff + "_1p0",
-    "rwgt_" + WilsonCoeff + "_2p0",
-    "rwgt_" + WilsonCoeff + "_3p0",
-    "rwgt_" + WilsonCoeff + "_4p0",
-    "rwgt_" + WilsonCoeff + "_5p0"
+    "rwgt_" + WilsonCoeff + "_min0p25",
+    "rwgt_" + WilsonCoeff + "_min0p2",
+    "rwgt_" + WilsonCoeff + "_min0p15",
+    "rwgt_" + WilsonCoeff + "_min0p1",
+    "rwgt_" + WilsonCoeff + "_min0p05",
+    "rwgt_SM",
+    "rwgt_" + WilsonCoeff + "_0p05",
+    "rwgt_" + WilsonCoeff + "_0p1",
+    "rwgt_" + WilsonCoeff + "_0p15",
+    "rwgt_" + WilsonCoeff + "_0p2",
+    "rwgt_" + WilsonCoeff + "_0p25"
     )
 )
 

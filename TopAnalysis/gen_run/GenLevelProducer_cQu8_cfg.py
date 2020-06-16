@@ -5,7 +5,7 @@ WilsonCoeff = 'cQu8'
 
 process = cms.Process('myprocess')
 
-process.TFileService=cms.Service("TFileService",fileName=cms.string('/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/gen_output/rwgt_' + WilsonCoeff + '.root'))
+process.TFileService=cms.Service("TFileService",fileName=cms.string('/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/gen_output/SMEFT_' + WilsonCoeff + '.root'))
 
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
@@ -39,7 +39,7 @@ process.boosted = cms.EDAnalyzer('BoostedTTbarFlatTreeProducerGenLevel',
     "rwgt_" + WilsonCoeff + "_min3p0",
     "rwgt_" + WilsonCoeff + "_min2p0",
     "rwgt_" + WilsonCoeff + "_min1p0",
-    "rwgt_" + WilsonCoeff + "_0p0",
+    "rwgt_SM",
     "rwgt_" + WilsonCoeff + "_1p0",
     "rwgt_" + WilsonCoeff + "_2p0",
     "rwgt_" + WilsonCoeff + "_3p0",

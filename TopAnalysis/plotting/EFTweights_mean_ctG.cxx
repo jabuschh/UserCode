@@ -1,7 +1,7 @@
 {
   // specify the Wilson coefficient
-  vector<TString> v_WilsonCoeff = {"cQq81"       ,"cQq83"       ,"ctu8"      ,"ctd8"      ,"cQu8"      ,"cQd8"      ,"ctq8"      ,"ctG"};
-  vector<TString> v_WC_name     = {"C_{Qq}^{1,8}","C_{Qq}^{3,8}","C_{tu}^{8}","C_{td}^{8}","C_{Qu}^{8}","C_{Qd}^{8}","C_{tq}^{8}","C_{tG}"};
+  vector<TString> v_WilsonCoeff = {"ctG"};
+  vector<TString> v_WC_name     = {"C_{tG}"};
 
 
   for(int n=0; n<v_WilsonCoeff.size(); n++){
@@ -20,21 +20,21 @@
 
     cout << "reading in histograms from root file..." << endl;
     TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/";
-    TFile *rootfile = TFile::Open(dir + "rwgt_" + WilsonCoeff + ".root", "READ");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_min5p0"); TH1F* h_EFTweight_min5p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_min4p0"); TH1F* h_EFTweight_min4p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_EFTweight_min3p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_EFTweight_min2p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_EFTweight_min1p0 = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_0p0");    TH1F* h_EFTweight_0p0    = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_EFTweight_1p0    = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_EFTweight_2p0    = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_EFTweight_3p0    = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_4p0");    TH1F* h_EFTweight_4p0    = (TH1F*) gDirectory->Get("EFTweight");
-    rootfile->cd("rwgt_" + WilsonCoeff + "_5p0");    TH1F* h_EFTweight_5p0    = (TH1F*) gDirectory->Get("EFTweight");
+    TFile *rootfile = TFile::Open(dir + "SMEFT_" + WilsonCoeff + ".root", "READ");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_min0p25"); TH1F* h_EFTweight_min5p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_min0p2");  TH1F* h_EFTweight_min4p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_min0p15"); TH1F* h_EFTweight_min3p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_min0p1");  TH1F* h_EFTweight_min2p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_min0p05"); TH1F* h_EFTweight_min1p0 = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_SM");                          TH1F* h_EFTweight_0p0    = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_0p05");    TH1F* h_EFTweight_1p0    = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_0p1");     TH1F* h_EFTweight_2p0    = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_0p15");    TH1F* h_EFTweight_3p0    = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_0p2");     TH1F* h_EFTweight_4p0    = (TH1F*) gDirectory->Get("EFTweight");
+    rootfile->cd("rwgt_" + WilsonCoeff + "_0p25");    TH1F* h_EFTweight_5p0    = (TH1F*) gDirectory->Get("EFTweight");
 
 
-    double WCs[11]       = {-5,-4,-3,-2,-1,0,1,2,3,4,5};
+    double WCs[11]       = {-0.25,-0.20,-0.15,-0.10,-0.05,0.0,0.05,0.10,0.15,0.20,0.25};
     double WCsErrors[11] = {0,0,0,0,0,0,0,0,0,0,0};
     double v_means[11] = {
       h_EFTweight_min5p0->GetMean(1),
@@ -82,7 +82,7 @@
     //x axis
     graph->GetXaxis()->SetTitle(WC_name);
     graph->GetXaxis()->SetTitleOffset(1.4);
-    graph->GetXaxis()->SetLimits(-5.999,5.999);
+    graph->GetXaxis()->SetLimits(-0.2999,0.2999);
     //y axis
     graph->GetYaxis()->SetTitle("mean of EFT weights");
     graph->GetYaxis()->SetTitleOffset(1.7);
@@ -94,8 +94,4 @@
     c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/EFTweights_mean_" + WilsonCoeff + ".pdf");
     c1->Close();
   }
-
-
-
-
 }
