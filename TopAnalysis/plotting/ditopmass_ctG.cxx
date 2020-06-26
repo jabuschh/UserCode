@@ -47,17 +47,17 @@
 
 
     //rebinning
-    h_ditopmass_min0p25->Rebin(4);
-    h_ditopmass_min0p2 ->Rebin(4);
-    h_ditopmass_min0p15->Rebin(4);
-    h_ditopmass_min0p1 ->Rebin(4);
-    h_ditopmass_min0p05->Rebin(4);
-    h_ditopmass_SM     ->Rebin(4);
-    h_ditopmass_0p05   ->Rebin(4);
-    h_ditopmass_0p1    ->Rebin(4);
-    h_ditopmass_0p15   ->Rebin(4);
-    h_ditopmass_0p2    ->Rebin(4);
-    h_ditopmass_0p25   ->Rebin(4);
+    h_ditopmass_min0p25->Rebin(5);
+    h_ditopmass_min0p2 ->Rebin(5);
+    h_ditopmass_min0p15->Rebin(5);
+    h_ditopmass_min0p1 ->Rebin(5);
+    h_ditopmass_min0p05->Rebin(5);
+    h_ditopmass_SM     ->Rebin(5);
+    h_ditopmass_0p05   ->Rebin(5);
+    h_ditopmass_0p1    ->Rebin(5);
+    h_ditopmass_0p15   ->Rebin(5);
+    h_ditopmass_0p2    ->Rebin(5);
+    h_ditopmass_0p25   ->Rebin(5);
     // line color
     // h_ditopmass_min0p25->SetLineColor(kOrange);
     // h_ditopmass_min0p2 ->SetLineColor(kGreen);
@@ -115,7 +115,7 @@
     // y axis
     h_ditopmass_min0p25->GetYaxis()->SetTitle("events");
     h_ditopmass_min0p25->GetYaxis()->SetTitleOffset(2.5);
-    h_ditopmass_min0p25->SetAxisRange(-1000,49000,"Y");
+    h_ditopmass_min0p25->SetAxisRange(-1000,59000,"Y");
     // gPad->SetLogy();
 
     //legend
@@ -162,7 +162,7 @@
     h_ditopmass_0p25   ->Draw("hist same");
     h_ditopmass_SM     ->Draw("hist same");
     legend             ->Draw("hist same");
-    // line               ->Draw();
+    line               ->Draw();
 
     c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ditopmass_" + WilsonCoeff + ".pdf");
     c1->Close();

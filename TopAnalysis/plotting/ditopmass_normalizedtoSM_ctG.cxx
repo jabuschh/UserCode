@@ -45,18 +45,19 @@
     gPad->SetRightMargin(0.05);
     gPad->SetBottomMargin(0.14);
 
-    // rescaling
-    h_ditopmass_min0p25->Scale(1./(h_ditopmass_min0p25->Integral()));
-    h_ditopmass_min0p2 ->Scale(1./(h_ditopmass_min0p2 ->Integral()));
-    h_ditopmass_min0p15->Scale(1./(h_ditopmass_min0p15->Integral()));
-    h_ditopmass_min0p1 ->Scale(1./(h_ditopmass_min0p1 ->Integral()));
-    h_ditopmass_min0p05->Scale(1./(h_ditopmass_min0p05->Integral()));
-    h_ditopmass_SM     ->Scale(1./(h_ditopmass_SM  ->Integral()));
-    h_ditopmass_0p05   ->Scale(1./(h_ditopmass_0p05->Integral()));
-    h_ditopmass_0p1    ->Scale(1./(h_ditopmass_0p1 ->Integral()));
-    h_ditopmass_0p15   ->Scale(1./(h_ditopmass_0p15->Integral()));
-    h_ditopmass_0p2    ->Scale(1./(h_ditopmass_0p2 ->Integral()));
-    h_ditopmass_0p25   ->Scale(1./(h_ditopmass_0p25->Integral()));
+
+    // rescaling to SM histogram
+    h_ditopmass_min0p25->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_min0p2 ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_min0p15->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_min0p1 ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_min0p05->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_SM     ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_0p05   ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_0p1    ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_0p15   ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_0p2    ->Scale(1./(h_ditopmass_SM->Integral()));
+    h_ditopmass_0p25   ->Scale(1./(h_ditopmass_SM->Integral()));
 
     //rebinning
     h_ditopmass_min0p25->Rebin(5);
@@ -70,6 +71,7 @@
     h_ditopmass_0p15   ->Rebin(5);
     h_ditopmass_0p2    ->Rebin(5);
     h_ditopmass_0p25   ->Rebin(5);
+
     // line color
     // h_ditopmass_min0p25->SetLineColor(kOrange);
     // h_ditopmass_min0p2 ->SetLineColor(kGreen);
@@ -127,8 +129,8 @@
     // y axis
     h_ditopmass_min0p25->GetYaxis()->SetTitle("fraction of events");
     h_ditopmass_min0p25->GetYaxis()->SetTitleOffset(2.0);
-    h_ditopmass_min0p25->SetAxisRange(5.0E-06,5.0E-01,"Y");
-    gPad->SetLogy();
+    h_ditopmass_min0p25->SetAxisRange(-0.01,0.49,"Y");
+    // gPad->SetLogy();
 
     //legend
     TLegend* legend;
@@ -172,10 +174,9 @@
     h_ditopmass_0p25   ->Draw("hist same");
     h_ditopmass_SM     ->Draw("hist same");
     legend             ->Draw("hist same");
-    // line              ->Draw();
+    line               ->Draw();
 
-    // break;
-    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ditopmass_normalized_logscale_" + WilsonCoeff + ".pdf");
+    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ditopmass_normalizedtoSM_" + WilsonCoeff + ".pdf");
     c1->Close();
   }
 }

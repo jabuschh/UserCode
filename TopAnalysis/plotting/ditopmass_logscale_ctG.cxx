@@ -47,17 +47,17 @@
 
 
     //rebinning
-    h_ditopmass_min0p25->Rebin(4);
-    h_ditopmass_min0p2 ->Rebin(4);
-    h_ditopmass_min0p15->Rebin(4);
-    h_ditopmass_min0p1 ->Rebin(4);
-    h_ditopmass_min0p05->Rebin(4);
-    h_ditopmass_SM     ->Rebin(4);
-    h_ditopmass_0p05   ->Rebin(4);
-    h_ditopmass_0p1    ->Rebin(4);
-    h_ditopmass_0p15   ->Rebin(4);
-    h_ditopmass_0p2    ->Rebin(4);
-    h_ditopmass_0p25   ->Rebin(4);
+    h_ditopmass_min0p25->Rebin(5);
+    h_ditopmass_min0p2 ->Rebin(5);
+    h_ditopmass_min0p15->Rebin(5);
+    h_ditopmass_min0p1 ->Rebin(5);
+    h_ditopmass_min0p05->Rebin(5);
+    h_ditopmass_SM     ->Rebin(5);
+    h_ditopmass_0p05   ->Rebin(5);
+    h_ditopmass_0p1    ->Rebin(5);
+    h_ditopmass_0p15   ->Rebin(5);
+    h_ditopmass_0p2    ->Rebin(5);
+    h_ditopmass_0p25   ->Rebin(5);
     // line color
     // h_ditopmass_min0p25->SetLineColor(kOrange);
     // h_ditopmass_min0p2 ->SetLineColor(kGreen);

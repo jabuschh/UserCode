@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 import os
 
-WilsonCoeff = 'CGtil'
+WilsonCoeff = 'CGtil_min1'
 
 process = cms.Process('myprocess')
 
@@ -11,7 +11,7 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
-       'file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/output/ALPs_100k_CaPhi_CGtil_variations.root')
+       'file:/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genproduction/CMSSW_7_1_45_patch3/output/ALP_linear_CaG_min1_1k.root')
 )
 #############   Format MessageLogger #################
 process.load('FWCore.MessageService.MessageLogger_cfi')
@@ -25,27 +25,15 @@ from RecoJets.JetProducers.ak4GenJets_cfi import ak4GenJets
 from RecoJets.JetProducers.GenJetParameters_cfi import *
 
 ##-------------------- User analyzer  --------------------------------
-process.boosted = cms.EDAnalyzer('BoostedTTbarFlatTreeProducerGenLevel',
+process.boosted = cms.EDAnalyzer('gen_runner_ALP',
   genparticles    = cms.untracked.InputTag('genParticles'),
   isMC            = cms.untracked.bool(True),
   genjets         = cms.untracked.InputTag('ak4GenJets'),
   GenptMin        = cms.untracked.double(30),
   GenetaMax       = cms.untracked.double(2.4),
   isPrint         = cms.untracked.bool(True),
-  isHigherOrder   = cms.untracked.bool(True),
-  EFT_weights     = cms.untracked.vstring(
-    "rwgt_" + WilsonCoeff + "_min5",
-    "rwgt_" + WilsonCoeff + "_min4",
-    "rwgt_" + WilsonCoeff + "_min3",
-    "rwgt_" + WilsonCoeff + "_min2p0",
-    "rwgt_" + WilsonCoeff + "_min1p0",
-    "rwgt_SM",
-    "rwgt_" + WilsonCoeff + "_1p0",
-    "rwgt_" + WilsonCoeff + "_2p0",
-    "rwgt_" + WilsonCoeff + "_3p0",
-    "rwgt_" + WilsonCoeff + "_4p0",
-    "rwgt_" + WilsonCoeff + "_5p0"
-    )
+  isHigherOrder   = cms.untracked.bool(True)
+  # EFT_weights     = cms.untracked.vstring("rwgt_" + WilsonCoeff)
 )
 
 process.p = cms.Path(

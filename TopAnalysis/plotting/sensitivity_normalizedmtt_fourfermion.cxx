@@ -123,7 +123,7 @@
     rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_ditopmass_min3p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_ditopmass_min2p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_ditopmass_min1p0 = (TH1F*) gDirectory->Get("mass_ditop");
-    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
+    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_SM     = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_ditopmass_1p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_ditopmass_2p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_ditopmass_3p0    = (TH1F*) gDirectory->Get("mass_ditop");
@@ -203,7 +203,7 @@
     h_ditopmass_min3p0->Scale(1./(h_ditopmass_min3p0->Integral()));
     h_ditopmass_min2p0->Scale(1./(h_ditopmass_min2p0->Integral()));
     h_ditopmass_min1p0->Scale(1./(h_ditopmass_min1p0->Integral()));
-    h_ditopmass_0p0   ->Scale(1./(h_ditopmass_0p0->Integral()));
+    h_ditopmass_SM    ->Scale(1./(h_ditopmass_SM ->Integral()));
     h_ditopmass_1p0   ->Scale(1./(h_ditopmass_1p0->Integral()));
     h_ditopmass_2p0   ->Scale(1./(h_ditopmass_2p0->Integral()));
     h_ditopmass_3p0   ->Scale(1./(h_ditopmass_3p0->Integral()));
@@ -215,7 +215,7 @@
     h_ditopmass_min3p0->Rebin(5);
     h_ditopmass_min2p0->Rebin(5);
     h_ditopmass_min1p0->Rebin(5);
-    h_ditopmass_0p0   ->Rebin(5);
+    h_ditopmass_SM    ->Rebin(5);
     h_ditopmass_1p0   ->Rebin(5);
     h_ditopmass_2p0   ->Rebin(5);
     h_ditopmass_3p0   ->Rebin(5);
@@ -223,18 +223,18 @@
     h_ditopmass_5p0   ->Rebin(5);
 
     // sensitivity
-    h_ditopmass_min5p0->Add(h_ditopmass_0p0,-1); h_ditopmass_min5p0->Divide(h_ditopmass_0p0);
-    h_ditopmass_min4p0->Add(h_ditopmass_0p0,-1); h_ditopmass_min4p0->Divide(h_ditopmass_0p0);
-    h_ditopmass_min3p0->Add(h_ditopmass_0p0,-1); h_ditopmass_min3p0->Divide(h_ditopmass_0p0);
-    h_ditopmass_min2p0->Add(h_ditopmass_0p0,-1); h_ditopmass_min2p0->Divide(h_ditopmass_0p0);
-    h_ditopmass_min1p0->Add(h_ditopmass_0p0,-1); h_ditopmass_min1p0->Divide(h_ditopmass_0p0);
-    h_ditopmass_1p0   ->Add(h_ditopmass_0p0,-1); h_ditopmass_1p0   ->Divide(h_ditopmass_0p0);
-    h_ditopmass_2p0   ->Add(h_ditopmass_0p0,-1); h_ditopmass_2p0   ->Divide(h_ditopmass_0p0);
-    h_ditopmass_3p0   ->Add(h_ditopmass_0p0,-1); h_ditopmass_3p0   ->Divide(h_ditopmass_0p0);
-    h_ditopmass_4p0   ->Add(h_ditopmass_0p0,-1); h_ditopmass_4p0   ->Divide(h_ditopmass_0p0);
-    h_ditopmass_5p0   ->Add(h_ditopmass_0p0,-1); h_ditopmass_5p0   ->Divide(h_ditopmass_0p0);
+    h_ditopmass_min5p0->Add(h_ditopmass_SM,-1); h_ditopmass_min5p0->Divide(h_ditopmass_SM);
+    h_ditopmass_min4p0->Add(h_ditopmass_SM,-1); h_ditopmass_min4p0->Divide(h_ditopmass_SM);
+    h_ditopmass_min3p0->Add(h_ditopmass_SM,-1); h_ditopmass_min3p0->Divide(h_ditopmass_SM);
+    h_ditopmass_min2p0->Add(h_ditopmass_SM,-1); h_ditopmass_min2p0->Divide(h_ditopmass_SM);
+    h_ditopmass_min1p0->Add(h_ditopmass_SM,-1); h_ditopmass_min1p0->Divide(h_ditopmass_SM);
+    h_ditopmass_1p0   ->Add(h_ditopmass_SM,-1); h_ditopmass_1p0   ->Divide(h_ditopmass_SM);
+    h_ditopmass_2p0   ->Add(h_ditopmass_SM,-1); h_ditopmass_2p0   ->Divide(h_ditopmass_SM);
+    h_ditopmass_3p0   ->Add(h_ditopmass_SM,-1); h_ditopmass_3p0   ->Divide(h_ditopmass_SM);
+    h_ditopmass_4p0   ->Add(h_ditopmass_SM,-1); h_ditopmass_4p0   ->Divide(h_ditopmass_SM);
+    h_ditopmass_5p0   ->Add(h_ditopmass_SM,-1); h_ditopmass_5p0   ->Divide(h_ditopmass_SM);
 
-    int N_bins = (int) h_ditopmass_0p0->GetSize();
+    int N_bins = (int) h_ditopmass_SM->GetSize();
 
     // cout << "EFT signal total bins: " << N_bins << endl;
     // cout << endl;
@@ -252,10 +252,9 @@
     double sens_5p0[N_bins], sens_err_5p0[N_bins];
 
     for(int i=0; i<N_bins; i++){
-      mtt[i]  = h_ditopmass_0p0->GetBinCenter(i);
-      mtt_err[i] = h_ditopmass_0p0->GetBinWidth(i) / 2;
+      mtt[i]  = h_ditopmass_SM ->GetBinCenter(i);
+      mtt_err[i] = h_ditopmass_SM ->GetBinWidth(i) / 2;
 
-      if(h_ditopmass_0p0->GetBinContent(i) > 0.){
         sens_min5p0[i] = h_ditopmass_min5p0->GetBinContent(i);
         sens_min4p0[i] = h_ditopmass_min4p0->GetBinContent(i);
         sens_min3p0[i] = h_ditopmass_min3p0->GetBinContent(i);
@@ -276,29 +275,6 @@
         sens_err_3p0[i]    = h_ditopmass_3p0   ->GetBinError(i);
         sens_err_4p0[i]    = h_ditopmass_4p0   ->GetBinError(i);
         sens_err_5p0[i]    = h_ditopmass_5p0   ->GetBinError(i);
-      }
-      else{
-        sens_min5p0[i] = 0.;
-        sens_min4p0[i] = 0.;
-        sens_min3p0[i] = 0.;
-        sens_min2p0[i] = 0.;
-        sens_min1p0[i] = 0.;
-        sens_1p0[i]    = 0.;
-        sens_2p0[i]    = 0.;
-        sens_3p0[i]    = 0.;
-        sens_4p0[i]    = 0.;
-        sens_5p0[i]    = 0.;
-        sens_err_min5p0[i] = 0.;
-        sens_err_min4p0[i] = 0.;
-        sens_err_min3p0[i] = 0.;
-        sens_err_min2p0[i] = 0.;
-        sens_err_min1p0[i] = 0.;
-        sens_err_1p0[i]    = 0.;
-        sens_err_2p0[i]    = 0.;
-        sens_err_3p0[i]    = 0.;
-        sens_err_4p0[i]    = 0.;
-        sens_err_5p0[i]    = 0.;
-      }
     }
 
 
@@ -378,7 +354,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-2.1,2.1);
+    gr_min5p0->GetYaxis()->SetRangeUser(-3.1,3.1);
 
 
 

@@ -247,7 +247,6 @@
       mtt[i]  = h_ditopmass_0p0->GetBinCenter(i);
       mtt_err[i] = h_ditopmass_0p0->GetBinWidth(i) / 2;
 
-      if(h_ditopmass_0p0->GetBinContent(i) > 0.){
         sens_min5p0[i] = h_ditopmass_min5p0->GetBinContent(i);
         sens_min4p0[i] = h_ditopmass_min4p0->GetBinContent(i);
         sens_min3p0[i] = h_ditopmass_min3p0->GetBinContent(i);
@@ -268,29 +267,6 @@
         sens_err_3p0[i]    = h_ditopmass_3p0   ->GetBinError(i);
         sens_err_4p0[i]    = h_ditopmass_4p0   ->GetBinError(i);
         sens_err_5p0[i]    = h_ditopmass_5p0   ->GetBinError(i);
-      }
-      else{
-        sens_min5p0[i] = 0.;
-        sens_min4p0[i] = 0.;
-        sens_min3p0[i] = 0.;
-        sens_min2p0[i] = 0.;
-        sens_min1p0[i] = 0.;
-        sens_1p0[i]    = 0.;
-        sens_2p0[i]    = 0.;
-        sens_3p0[i]    = 0.;
-        sens_4p0[i]    = 0.;
-        sens_5p0[i]    = 0.;
-        sens_err_min5p0[i] = 0.;
-        sens_err_min4p0[i] = 0.;
-        sens_err_min3p0[i] = 0.;
-        sens_err_min2p0[i] = 0.;
-        sens_err_min1p0[i] = 0.;
-        sens_err_1p0[i]    = 0.;
-        sens_err_2p0[i]    = 0.;
-        sens_err_3p0[i]    = 0.;
-        sens_err_4p0[i]    = 0.;
-        sens_err_5p0[i]    = 0.;
-      }
     }
 
 
@@ -370,7 +346,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-2.1,2.1);
+    gr_min5p0->GetYaxis()->SetRangeUser(-3.1,3.1);
 
 
 

@@ -3,7 +3,6 @@
   vector<TString> v_WilsonCoeff = {"ctG"};
   vector<TString> v_WC_name     = {"C_{tG}"};
 
-
   // data from b2g-17-017: lepton + jets (rebinned)
   cout << "reading in SM data from root files: lepton + jets..." << endl;
   TString dir = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/b2g-17-017/input/postfit/";
@@ -133,8 +132,6 @@
 
 
 
-
-
     // SM data uncertainty: l + jets
     TH1F* h_ljets = v_hists_ljets.at(0);
     for(int i=1; i<v_hists_ljets.size(); i++){
@@ -200,7 +197,18 @@
 
 
 
-
+    // normalizing
+    h_ditopmass_min0p25->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_min0p2 ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_min0p15->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_min0p1 ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_min0p05->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_SM     ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_0p05   ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_0p1    ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_0p15   ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_0p2    ->Scale(1./(h_ditopmass_SM  ->Integral()));
+    h_ditopmass_0p25   ->Scale(1./(h_ditopmass_SM  ->Integral()));
     //rebinning
     h_ditopmass_min0p25->Rebin(5);
     h_ditopmass_min0p2 ->Rebin(5);
@@ -214,19 +222,19 @@
     h_ditopmass_0p2    ->Rebin(5);
     h_ditopmass_0p25   ->Rebin(5);
 
-    // sensitivity
-    h_ditopmass_min0p25->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p25->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p2 ->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p2 ->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p15->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p15->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p1 ->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p1 ->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p05->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p05->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p05   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p05   ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p1    ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p1    ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p15   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p15   ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p2    ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p2    ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p25   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p25   ->Divide(h_ditopmass_SM  );
+    // ratio
+    h_ditopmass_min0p25->Add(h_ditopmass_SM,-1); h_ditopmass_min0p25->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p2 ->Add(h_ditopmass_SM,-1); h_ditopmass_min0p2 ->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p15->Add(h_ditopmass_SM,-1); h_ditopmass_min0p15->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p1 ->Add(h_ditopmass_SM,-1); h_ditopmass_min0p1 ->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p05->Add(h_ditopmass_SM,-1); h_ditopmass_min0p05->Divide(h_ditopmass_SM);
+    h_ditopmass_0p05   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p05   ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p1    ->Add(h_ditopmass_SM,-1); h_ditopmass_0p1    ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p15   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p15   ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p2    ->Add(h_ditopmass_SM,-1); h_ditopmass_0p2    ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p25   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p25   ->Divide(h_ditopmass_SM);
 
-    int N_bins = (int) h_ditopmass_SM  ->GetSize();
+    int N_bins = (int) h_ditopmass_SM->GetSize();
 
     // cout << "EFT signal total bins: " << N_bins << endl;
     // cout << endl;
@@ -346,7 +354,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-3.1,3.1);
+    gr_min5p0->GetYaxis()->SetRangeUser(-10.1,10.1);
 
 
 
@@ -403,7 +411,7 @@
 
 
     // break;
-    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/sensitivity_" + WilsonCoeff + ".pdf");
+    c1->SaveAs("/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/plots/ratio_normalizedmtt_" + WilsonCoeff + ".pdf");
     // break;
     c1->Close();
   }

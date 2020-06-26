@@ -45,6 +45,7 @@
     gPad->SetRightMargin(0.05);
     gPad->SetBottomMargin(0.14);
 
+
     // rescaling
     h_ditopmass_min0p25->Scale(1./(h_ditopmass_min0p25->Integral()));
     h_ditopmass_min0p2 ->Scale(1./(h_ditopmass_min0p2 ->Integral()));
@@ -59,17 +60,18 @@
     h_ditopmass_0p25   ->Scale(1./(h_ditopmass_0p25->Integral()));
 
     //rebinning
-    h_ditopmass_min0p25->Rebin(4);
-    h_ditopmass_min0p2 ->Rebin(4);
-    h_ditopmass_min0p15->Rebin(4);
-    h_ditopmass_min0p1 ->Rebin(4);
-    h_ditopmass_min0p05->Rebin(4);
-    h_ditopmass_SM     ->Rebin(4);
-    h_ditopmass_0p05   ->Rebin(4);
-    h_ditopmass_0p1    ->Rebin(4);
-    h_ditopmass_0p15   ->Rebin(4);
-    h_ditopmass_0p2    ->Rebin(4);
-    h_ditopmass_0p25   ->Rebin(4);
+    h_ditopmass_min0p25->Rebin(5);
+    h_ditopmass_min0p2 ->Rebin(5);
+    h_ditopmass_min0p15->Rebin(5);
+    h_ditopmass_min0p1 ->Rebin(5);
+    h_ditopmass_min0p05->Rebin(5);
+    h_ditopmass_SM     ->Rebin(5);
+    h_ditopmass_0p05   ->Rebin(5);
+    h_ditopmass_0p1    ->Rebin(5);
+    h_ditopmass_0p15   ->Rebin(5);
+    h_ditopmass_0p2    ->Rebin(5);
+    h_ditopmass_0p25   ->Rebin(5);
+
     // line color
     // h_ditopmass_min0p25->SetLineColor(kOrange);
     // h_ditopmass_min0p2 ->SetLineColor(kGreen);
@@ -127,7 +129,7 @@
     // y axis
     h_ditopmass_min0p25->GetYaxis()->SetTitle("fraction of events");
     h_ditopmass_min0p25->GetYaxis()->SetTitleOffset(2.0);
-    h_ditopmass_min0p25->SetAxisRange(-0.01,0.39,"Y");
+    h_ditopmass_min0p25->SetAxisRange(-0.01,0.49,"Y");
     // gPad->SetLogy();
 
     //legend
@@ -142,17 +144,17 @@
     legend->SetLineColor(0); // 0: white, 1: black
     legend->SetFillColor(0);
     legend->SetFillStyle(1001);
-    legend->AddEntry(h_ditopmass_min0p25, WC_name + " = -5.0","l");
-    legend->AddEntry(h_ditopmass_min0p2 , WC_name + " = -4.0","l");
-    legend->AddEntry(h_ditopmass_min0p15, WC_name + " = -3.0","l");
-    legend->AddEntry(h_ditopmass_min0p1 , WC_name + " = -2.0","l");
-    legend->AddEntry(h_ditopmass_min0p05, WC_name + " = -1.0","l");
-    legend->AddEntry(h_ditopmass_SM  , WC_name + " = 0.0 (SM)","l");
-    legend->AddEntry(h_ditopmass_0p05, WC_name + " = 1.0","l");
-    legend->AddEntry(h_ditopmass_0p1 , WC_name + " = 2.0","l");
-    legend->AddEntry(h_ditopmass_0p15, WC_name + " = 3.0","l");
-    legend->AddEntry(h_ditopmass_0p2 , WC_name + " = 4.0","l");
-    legend->AddEntry(h_ditopmass_0p25, WC_name + " = 5.0","l");
+    legend->AddEntry(h_ditopmass_min0p25, WC_name + " = -0.25","l");
+    legend->AddEntry(h_ditopmass_min0p2 , WC_name + " = -0.20","l");
+    legend->AddEntry(h_ditopmass_min0p15, WC_name + " = -0.15","l");
+    legend->AddEntry(h_ditopmass_min0p1 , WC_name + " = -0.10","l");
+    legend->AddEntry(h_ditopmass_min0p05, WC_name + " = -0.05","l");
+    legend->AddEntry(h_ditopmass_SM  ,    WC_name + " = 0.0 (SM)","l");
+    legend->AddEntry(h_ditopmass_0p05,    WC_name + " = 0.05","l");
+    legend->AddEntry(h_ditopmass_0p1 ,    WC_name + " = 0.10","l");
+    legend->AddEntry(h_ditopmass_0p15,    WC_name + " = 0.15","l");
+    legend->AddEntry(h_ditopmass_0p2 ,    WC_name + " = 0.20","l");
+    legend->AddEntry(h_ditopmass_0p25,    WC_name + " = 0.25","l");
     //line at 0
     TLine* line;
     line = new TLine(0,0,4000,0);

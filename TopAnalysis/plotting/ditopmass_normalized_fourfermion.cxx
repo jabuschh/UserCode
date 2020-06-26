@@ -26,7 +26,7 @@
     rootfile->cd("rwgt_" + WilsonCoeff + "_min3p0"); TH1F* h_ditopmass_min3p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min2p0"); TH1F* h_ditopmass_min2p0 = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_min1p0"); TH1F* h_ditopmass_min1p0 = (TH1F*) gDirectory->Get("mass_ditop");
-    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_0p0    = (TH1F*) gDirectory->Get("mass_ditop");
+    rootfile->cd("rwgt_SM");                         TH1F* h_ditopmass_SM     = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_1p0");    TH1F* h_ditopmass_1p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_2p0");    TH1F* h_ditopmass_2p0    = (TH1F*) gDirectory->Get("mass_ditop");
     rootfile->cd("rwgt_" + WilsonCoeff + "_3p0");    TH1F* h_ditopmass_3p0    = (TH1F*) gDirectory->Get("mass_ditop");
@@ -51,7 +51,7 @@
     h_ditopmass_min3p0->Scale(1./(h_ditopmass_min3p0->Integral()));
     h_ditopmass_min2p0->Scale(1./(h_ditopmass_min2p0->Integral()));
     h_ditopmass_min1p0->Scale(1./(h_ditopmass_min1p0->Integral()));
-    h_ditopmass_0p0   ->Scale(1./(h_ditopmass_0p0->Integral()));
+    h_ditopmass_SM    ->Scale(1./(h_ditopmass_SM->Integral()));
     h_ditopmass_1p0   ->Scale(1./(h_ditopmass_1p0->Integral()));
     h_ditopmass_2p0   ->Scale(1./(h_ditopmass_2p0->Integral()));
     h_ditopmass_3p0   ->Scale(1./(h_ditopmass_3p0->Integral()));
@@ -59,24 +59,24 @@
     h_ditopmass_5p0   ->Scale(1./(h_ditopmass_5p0->Integral()));
 
     //rebinning
-    h_ditopmass_min5p0->Rebin(4);
-    h_ditopmass_min4p0->Rebin(4);
-    h_ditopmass_min3p0->Rebin(4);
-    h_ditopmass_min2p0->Rebin(4);
-    h_ditopmass_min1p0->Rebin(4);
-    h_ditopmass_0p0   ->Rebin(4);
-    h_ditopmass_1p0   ->Rebin(4);
-    h_ditopmass_2p0   ->Rebin(4);
-    h_ditopmass_3p0   ->Rebin(4);
-    h_ditopmass_4p0   ->Rebin(4);
-    h_ditopmass_5p0   ->Rebin(4);
+    h_ditopmass_min5p0->Rebin(5);
+    h_ditopmass_min4p0->Rebin(5);
+    h_ditopmass_min3p0->Rebin(5);
+    h_ditopmass_min2p0->Rebin(5);
+    h_ditopmass_min1p0->Rebin(5);
+    h_ditopmass_SM    ->Rebin(5);
+    h_ditopmass_1p0   ->Rebin(5);
+    h_ditopmass_2p0   ->Rebin(5);
+    h_ditopmass_3p0   ->Rebin(5);
+    h_ditopmass_4p0   ->Rebin(5);
+    h_ditopmass_5p0   ->Rebin(5);
     // line color
     // h_ditopmass_min5p0->SetLineColor(kOrange);
     // h_ditopmass_min4p0->SetLineColor(kGreen);
     // h_ditopmass_min3p0->SetLineColor(kCyan);
     // h_ditopmass_min2p0->SetLineColor(kBlue+1);
     // h_ditopmass_min1p0->SetLineColor(kBlue);
-    // h_ditopmass_0p0   ->SetLineColor(kBlack);
+    // h_ditopmass_SM    ->SetLineColor(kBlack);
     // h_ditopmass_1p0   ->SetLineColor(kRed);
     // h_ditopmass_2p0   ->SetLineColor(kRed+1);
     // h_ditopmass_3p0   ->SetLineColor(kPink-9);
@@ -88,7 +88,7 @@
     h_ditopmass_min3p0->SetLineColorAlpha(kBlue,0.6);
     h_ditopmass_min2p0->SetLineColorAlpha(kBlue,0.4);
     h_ditopmass_min1p0->SetLineColorAlpha(kBlue,0.2);
-    h_ditopmass_0p0   ->SetLineColor(kBlack);
+    h_ditopmass_SM    ->SetLineColor(kBlack);
     h_ditopmass_1p0   ->SetLineColorAlpha(kRed,0.2);
     h_ditopmass_2p0   ->SetLineColorAlpha(kRed,0.4);
     h_ditopmass_3p0   ->SetLineColorAlpha(kRed,0.6);
@@ -100,7 +100,7 @@
     h_ditopmass_min3p0->SetLineWidth(2);
     h_ditopmass_min2p0->SetLineWidth(2);
     h_ditopmass_min1p0->SetLineWidth(2);
-    h_ditopmass_0p0   ->SetLineWidth(2);
+    h_ditopmass_SM    ->SetLineWidth(2);
     h_ditopmass_1p0   ->SetLineWidth(2);
     h_ditopmass_2p0   ->SetLineWidth(2);
     h_ditopmass_3p0   ->SetLineWidth(2);
@@ -112,7 +112,7 @@
     // h_ditopmass_min3p0->SetLineStyle(2);
     // h_ditopmass_min2p0->SetLineStyle(2);
     // h_ditopmass_min1p0->SetLineStyle(2);
-    // h_ditopmass_0p0   ->SetLineStyle(1);
+    // h_ditopmass_SM    ->SetLineStyle(1);
     // h_ditopmass_1p0   ->SetLineStyle(2);
     // h_ditopmass_2p0   ->SetLineStyle(2);
     // h_ditopmass_3p0   ->SetLineStyle(2);
@@ -127,7 +127,7 @@
     // y axis
     h_ditopmass_min5p0->GetYaxis()->SetTitle("fraction of events");
     h_ditopmass_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    h_ditopmass_min5p0->SetAxisRange(-0.01,0.39,"Y");
+    h_ditopmass_min5p0->SetAxisRange(-0.01,0.49,"Y");
     // gPad->SetLogy();
 
     //legend
@@ -147,7 +147,7 @@
     legend->AddEntry(h_ditopmass_min3p0, WC_name + " = -3.0","l");
     legend->AddEntry(h_ditopmass_min2p0, WC_name + " = -2.0","l");
     legend->AddEntry(h_ditopmass_min1p0, WC_name + " = -1.0","l");
-    legend->AddEntry(h_ditopmass_0p0, WC_name + " = 0.0 (SM)","l");
+    legend->AddEntry(h_ditopmass_SM , WC_name + " = 0.0 (SM)","l");
     legend->AddEntry(h_ditopmass_1p0, WC_name + " = 1.0","l");
     legend->AddEntry(h_ditopmass_2p0, WC_name + " = 2.0","l");
     legend->AddEntry(h_ditopmass_3p0, WC_name + " = 3.0","l");
@@ -170,7 +170,7 @@
     h_ditopmass_3p0   ->Draw("hist same");
     h_ditopmass_4p0   ->Draw("hist same");
     h_ditopmass_5p0   ->Draw("hist same");
-    h_ditopmass_0p0   ->Draw("hist same");
+    h_ditopmass_SM    ->Draw("hist same");
     legend            ->Draw("hist same");
     line              ->Draw();
 

@@ -223,18 +223,18 @@
     h_ditopmass_0p25   ->Rebin(5);
 
     // sensitivity
-    h_ditopmass_min0p25->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p25->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p2 ->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p2 ->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p15->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p15->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p1 ->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p1 ->Divide(h_ditopmass_SM  );
-    h_ditopmass_min0p05->Add(h_ditopmass_SM  ,-1); h_ditopmass_min0p05->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p05   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p05   ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p1    ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p1    ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p15   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p15   ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p2    ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p2    ->Divide(h_ditopmass_SM  );
-    h_ditopmass_0p25   ->Add(h_ditopmass_SM  ,-1); h_ditopmass_0p25   ->Divide(h_ditopmass_SM  );
+    h_ditopmass_min0p25->Add(h_ditopmass_SM,-1); h_ditopmass_min0p25->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p2 ->Add(h_ditopmass_SM,-1); h_ditopmass_min0p2 ->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p15->Add(h_ditopmass_SM,-1); h_ditopmass_min0p15->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p1 ->Add(h_ditopmass_SM,-1); h_ditopmass_min0p1 ->Divide(h_ditopmass_SM);
+    h_ditopmass_min0p05->Add(h_ditopmass_SM,-1); h_ditopmass_min0p05->Divide(h_ditopmass_SM);
+    h_ditopmass_0p05   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p05   ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p1    ->Add(h_ditopmass_SM,-1); h_ditopmass_0p1    ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p15   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p15   ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p2    ->Add(h_ditopmass_SM,-1); h_ditopmass_0p2    ->Divide(h_ditopmass_SM);
+    h_ditopmass_0p25   ->Add(h_ditopmass_SM,-1); h_ditopmass_0p25   ->Divide(h_ditopmass_SM);
 
-    int N_bins = (int) h_ditopmass_SM  ->GetSize();
+    int N_bins = (int) h_ditopmass_SM->GetSize();
 
     // cout << "EFT signal total bins: " << N_bins << endl;
     // cout << endl;
@@ -255,7 +255,6 @@
       mtt[i]  = h_ditopmass_SM  ->GetBinCenter(i);
       mtt_err[i] = h_ditopmass_SM  ->GetBinWidth(i) / 2;
 
-      if(h_ditopmass_SM  ->GetBinContent(i) > 0.){
         sens_min5p0[i] = h_ditopmass_min0p25->GetBinContent(i);
         sens_min4p0[i] = h_ditopmass_min0p2 ->GetBinContent(i);
         sens_min3p0[i] = h_ditopmass_min0p15->GetBinContent(i);
@@ -276,29 +275,6 @@
         sens_err_3p0[i]    = h_ditopmass_0p15   ->GetBinError(i);
         sens_err_4p0[i]    = h_ditopmass_0p2    ->GetBinError(i);
         sens_err_5p0[i]    = h_ditopmass_0p25   ->GetBinError(i);
-      }
-      else{
-        sens_min5p0[i] = 0.;
-        sens_min4p0[i] = 0.;
-        sens_min3p0[i] = 0.;
-        sens_min2p0[i] = 0.;
-        sens_min1p0[i] = 0.;
-        sens_1p0[i]    = 0.;
-        sens_2p0[i]    = 0.;
-        sens_3p0[i]    = 0.;
-        sens_4p0[i]    = 0.;
-        sens_5p0[i]    = 0.;
-        sens_err_min5p0[i] = 0.;
-        sens_err_min4p0[i] = 0.;
-        sens_err_min3p0[i] = 0.;
-        sens_err_min2p0[i] = 0.;
-        sens_err_min1p0[i] = 0.;
-        sens_err_1p0[i]    = 0.;
-        sens_err_2p0[i]    = 0.;
-        sens_err_3p0[i]    = 0.;
-        sens_err_4p0[i]    = 0.;
-        sens_err_5p0[i]    = 0.;
-      }
     }
 
 
@@ -378,7 +354,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-2.1,2.1);
+    gr_min5p0->GetYaxis()->SetRangeUser(-3.1,3.1);
 
 
 
