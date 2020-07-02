@@ -354,7 +354,7 @@
     // y axis
     gr_min5p0->GetYaxis()->SetTitle("#frac{N_{events}^{WC} - N_{events}^{SM}}{N_{events}^{SM}}");
     gr_min5p0->GetYaxis()->SetTitleOffset(2.0);
-    gr_min5p0->GetYaxis()->SetRangeUser(-3.1,3.1);
+    gr_min5p0->GetYaxis()->SetRangeUser(-5.1,5.1);
 
 
 

@@ -1,5 +1,7 @@
-./EFTweights_distr.sh
+./EFTweightdistr.sh
+./EFTweightdistr_logscale.sh
 ./EFTweights_mean.sh
+./chisquare.sh
 ./ditopmass.sh
 ./ditopmass_logscale.sh
 ./ditopmass_normalized.sh
