@@ -24,23 +24,23 @@ using namespace fastjet;
 
 BoostedTTbarFlatTreeProducerGenLevel::BoostedTTbarFlatTreeProducerGenLevel(edm::ParameterSet const& cfg)
 {
-  genjetsToken          = consumes<GenJetCollection>(cfg.getUntrackedParameter<edm::InputTag>("genjets",edm::InputTag("")));
-  genParticlesToken     = consumes<edm::View<reco::GenParticle> >(edm::InputTag("genParticles"));
-  GenptMin_             = cfg.getUntrackedParameter<double>("GenptMin");
-  GenetaMax_            = cfg.getUntrackedParameter<double>("GenetaMax");
-  weight_vector_        = cfg.getUntrackedParameter<vector <string>>("EFT_weights");
-  genEvtInfoToken = consumes<GenEventInfoProduct>(edm::InputTag("generator"));
-  isHigherOrder_ = cfg.getUntrackedParameter<bool>("isHigherOrder",false);
-  lheEvtInfoToken = consumes<LHEEventProduct>(edm::InputTag("externalLHEProducer"));
+  genjetsToken      = consumes<GenJetCollection>(cfg.getUntrackedParameter<edm::InputTag>("genjets",edm::InputTag("")));
+  genParticlesToken = consumes<edm::View<reco::GenParticle> >(edm::InputTag("genParticles"));
+  GenptMin_         = cfg.getUntrackedParameter<double>("GenptMin");
+  GenetaMax_        = cfg.getUntrackedParameter<double>("GenetaMax");
+  weight_vector_    = cfg.getUntrackedParameter<vector <string>>("EFT_weights");
+  genEvtInfoToken   = consumes<GenEventInfoProduct>(edm::InputTag("generator"));
+  isHigherOrder_    = cfg.getUntrackedParameter<bool>("isHigherOrder",false);
+  lheEvtInfoToken   = consumes<LHEEventProduct>(edm::InputTag("externalLHEProducer"));
 
   //Gen Jet information
-  fAKJetDef = new fastjet::JetDefinition(fastjet::antikt_algorithm, 0.8);
+  fAKJetDef             = new fastjet::JetDefinition(fastjet::antikt_algorithm, 0.8);
   int activeAreaRepeats = 1;
   double ghostArea      = 0.01;
   double ghostEtaMax    = 7.0;
   fActiveArea           = new fastjet::ActiveAreaSpec (ghostEtaMax,activeAreaRepeats,ghostArea);
   fAreaDefinition       = new fastjet::AreaDefinition (fastjet::active_area_explicit_ghosts, *fActiveArea );
-  sd = new fastjet::contrib::SoftDrop(0.0,0.1,0.8);//beta_, zCut_, R0 );
+  sd                    = new fastjet::contrib::SoftDrop(0.0,0.1,0.8);//beta_, zCut_, R0 );
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void BoostedTTbarFlatTreeProducerGenLevel::beginJob()

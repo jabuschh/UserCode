@@ -1,3 +1,0 @@
-#cmsRun SMEFT_GenLevelProducer_cQq81_ditopmass300to1000.py
-cmsRun SMEFT_GenLevelProducer_cQq81_ditopmass1000to2000.py
-cmsRun SMEFT_GenLevelProducer_cQq81_ditopmass2000to7000.py

@@ -1,0 +1,2 @@
+cmsRun analyzer_NPleq2_CaPhimin5_CaG1_M1000.py
+cmsRun analyzer_NPleq2_CaPhi5_CaG1_M1000.py

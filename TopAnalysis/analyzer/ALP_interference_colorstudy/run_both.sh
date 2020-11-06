@@ -1,0 +1,2 @@
+cmsRun ALP_interference_colorfromSM.py
+cmsRun ALP_interference_colorfromsignal.py

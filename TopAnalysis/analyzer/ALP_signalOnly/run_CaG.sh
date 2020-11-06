@@ -1,0 +1,11 @@
+cd /nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/analyzer/ALP/cfg/
+cmsRun analyzer_CaG_min5.py
+cmsRun analyzer_CaG_min4.py
+cmsRun analyzer_CaG_min3.py
+cmsRun analyzer_CaG_min2.py
+cmsRun analyzer_CaG_min1.py
+cmsRun analyzer_CaG_1.py
+cmsRun analyzer_CaG_2.py
+cmsRun analyzer_CaG_3.py
+cmsRun analyzer_CaG_4.py
+cmsRun analyzer_CaG_5.py

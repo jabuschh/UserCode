@@ -1,0 +1,10 @@
+executable          = submit_cQu8.sh
+transfer_executable = True
+on_exit_hold        = (ExitCode != 0)
+universe            = vanilla
+request_runtime     = 3600*4
+output              = condor_logs/condor_$(Cluster)_$(Process).out
+error               = condor_logs/condor_$(Cluster)_$(Process).error
+log                 = condor_logs/condor_$(Cluster)_$(Process).log
+arguments           = $(Process)
+queue

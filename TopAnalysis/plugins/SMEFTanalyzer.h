@@ -35,13 +35,15 @@ public:
   virtual ~SMEFTanalyzer();
 
 private:
-  std::string mFileName,mTreeName,mDirName,mWCname;
+  std::string mFileName,mTreeName,mDirName,mWCname,mDitopmassbin,mOutFileName;
+
 
   double mMinPt, mYMax;
   int mJetID;         // looseID==1 tightID==2
   int mprintOk;       // noPrint=0  Print=1
   bool mIsMCarlo;
-  double mCrossSection;
+  double N_events_generated;
+  double xsec_baseline;
   double mIntLumi;
   vector<std::string> mTriggers;
 
@@ -52,6 +54,7 @@ private:
 
   TString model;
   TString WilsonCoeff;
+  TString ditopmassbin;
 
   /*
   ██████  ███████  ██████ ██       █████  ██████  ███████     ██   ██ ██ ███████ ████████ ███████
@@ -96,6 +99,9 @@ private:
   TH1F *E_W;
   // EFT weights
   TH1F *EFTweight;
+  TH1F *EFTweight_pure;
+  TH2F *EFTweight_ditopmass;
+  TH2F *ditopmass_EFTweight;
 };
 
 #endif

@@ -1,0 +1,11 @@
+cd /nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/analyzer/ALP/cfg/
+cmsRun analyzer_WILSONCOEFFICIENT_min5.py
+cmsRun analyzer_WILSONCOEFFICIENT_min4.py
+cmsRun analyzer_WILSONCOEFFICIENT_min3.py
+cmsRun analyzer_WILSONCOEFFICIENT_min2.py
+cmsRun analyzer_WILSONCOEFFICIENT_min1.py
+cmsRun analyzer_WILSONCOEFFICIENT_1.py
+cmsRun analyzer_WILSONCOEFFICIENT_2.py
+cmsRun analyzer_WILSONCOEFFICIENT_3.py
+cmsRun analyzer_WILSONCOEFFICIENT_4.py
+cmsRun analyzer_WILSONCOEFFICIENT_5.py

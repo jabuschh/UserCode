@@ -24,24 +24,30 @@ using namespace std;
 
 SMEFTanalyzer::SMEFTanalyzer(edm::ParameterSet const& cfg)
 {
-  mFileName     = cfg.getParameter<std::string>("filename");
-  mTreeName     = cfg.getParameter<std::string>("treename");
-  mDirName      = cfg.getParameter<std::string>("dirname");
-  mIsMCarlo     = cfg.getUntrackedParameter<bool>("isMCarlo");
-  mCrossSection = cfg.getUntrackedParameter<double>("CrossSection");
-  mIntLumi      = cfg.getUntrackedParameter<double>("IntLumi");
-  mTriggers     = cfg.getUntrackedParameter<std::vector<std::string>>("Triggers");
-  mWCname       = cfg.getParameter<std::string>("WCname");
+  mFileName          = cfg.getParameter<std::string>("filename");
+  mTreeName          = cfg.getParameter<std::string>("treename");
+  mDirName           = cfg.getParameter<std::string>("dirname");
+  mOutFileName       = cfg.getParameter<std::string>("filename_out");
+  mTriggers          = cfg.getUntrackedParameter<std::vector<std::string>>("Triggers");
+  mIsMCarlo          = cfg.getUntrackedParameter<bool>("isMCarlo");
+  mIntLumi           = cfg.getUntrackedParameter<double>("IntLumi");
+  N_events_generated = cfg.getUntrackedParameter<double>("N_events_generated");
+  xsec_baseline      = cfg.getUntrackedParameter<double>("xsec_baseline");
+  mWCname            = cfg.getParameter<std::string>("WCname");
+  mDitopmassbin      = cfg.getParameter<std::string>("ditopmassbin");
 }
 
 void SMEFTanalyzer::beginJob()
 {
+  cout << "original cross section from baseline scenario: " << xsec_baseline << endl;
   model = "SMEFT_";
   WilsonCoeff = mWCname;
   cout << "Wilson coefficient: " << model + WilsonCoeff << endl;
-  cout << endl;
+  ditopmassbin = mDitopmassbin;
+  cout << "ditop mass bin: " << ditopmassbin << endl;
   cout << "beginning job..." << endl;
   mInf = TFile::Open(mFileName.c_str());
+  cout << "input file: " << mFileName.c_str() << endl;
   mDir = (TDirectoryFile*)mInf->Get(mDirName.c_str());
   mTree = (TTree*)mDir->Get(mTreeName.c_str());
 
@@ -87,7 +93,10 @@ void SMEFTanalyzer::beginJob()
   phi_W    = fs->make<TH1F>("phi_W","phi_W",35,-3.5,3.5);           phi_W->Sumw2();
   E_W      = fs->make<TH1F>("E_W","E_W",200,0,4000);                E_W->Sumw2();
   // EFT weights
-  EFTweight = fs->make<TH1F>("EFTweight","EFTweight",10000,-100,100); EFTweight->Sumw2();
+  EFTweight           = fs->make<TH1F>("EFTweight","EFTweight",2000,-10,10); EFTweight->Sumw2();
+  EFTweight_pure      = fs->make<TH1F>("EFTweight_pure","EFTweight_pure",2000,-10,10); EFTweight_pure->Sumw2();
+  EFTweight_ditopmass = fs->make<TH2F>("EFTweight_ditopmass","EFTweight_ditopmass",200,0,4000,2000,-10,10);
+  ditopmass_EFTweight = fs->make<TH2F>("ditopmass_EFTweight","ditopmass_EFTweight",2000,-10,10,200,0,4000);
 }
 
 
@@ -111,7 +120,8 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
   //reading in tree
   unsigned NEntries = mTree->GetEntries();
   cout << "reading in the tree..." << endl;
-  cout << "total number of events: " << NEntries << endl;
+  cout << "             generated events: " << N_events_generated << endl;
+  cout << "events in this ditop mass bin: " << NEntries << endl;
 
   /*
   // ██ ███    ██ ██ ████████ ██  █████  ██      ██ ███████ ██ ███    ██  ██████
@@ -123,7 +133,7 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
   cout << "initializing..." << endl;
   //monte carlo
   int decade = 0;
-  float hweight = 1.;  //Initial value set to one
+  double hweight = 1.0;  //Initial value set to one
   // int decay_ = 0;
   // double weight_ = 0;
   // float genEvtWeight_ = 0;
@@ -213,11 +223,9 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
   mTree->SetBranchAddress("EFTWeightsNames",&EFTWeightsNames_);
 
 
-
-
-  TString output_filename = "/nfs/dust/cms/user/jabuschh/PhD/ttbar/EFT_LO/genstudy/CMSSW_9_4_6/src/UserCode/TopAnalysis/output/" + model + WilsonCoeff + ".root";
+  TString output_filename = mOutFileName;
   TFile* output_file = new TFile(output_filename, "RECREATE");
-  cout << "setting output file: " + output_filename << endl;
+  cout << "setting output file: " << output_filename << endl;
   cout << endl;
 
   vector<TString> v_EFTweightnames;
@@ -252,16 +260,19 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
     };
   }
 
-
-
   for(unsigned int l=0; l<v_EFTweightnames.size(); l++){   //loop over EFT weights
+
     TString weightName_local = v_EFTweightnames.at(l);
+    // double crosssection = v_xsecs.at(l);  // take the MadGraph cross sections
+    double crosssection = xsec_baseline;  // take original cross secition from baseline scenario before reweighting
+
     cout << "EFT weight name: " << weightName_local << endl;
-    cout << "creating root directory: " << weightName_local << endl;
+    cout << "creating root directory..."<< endl;
     output_file->mkdir(weightName_local);
     output_file->cd(weightName_local);
 
     vector<TH1F*> v_hists;  //vector for saving the hists
+    vector<TH2F*> v_2Dhists;
 
     /*
     // ███████ ██    ██ ███████ ███    ██ ████████     ██       ██████   ██████  ██████
@@ -281,31 +292,47 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
       //reading the event
       mTree->GetEntry(i);
 
-
-      // if(mIsMCarlo){
-      //    hweight = mCrossSection / NEntries;
-      // }
+      // comment out for signal only!?
+      if(mIsMCarlo){
+        hweight = crosssection / N_events_generated;
+      }
+      // cout << "cross section [pb]: " << mCrossSection << endl;
       // cout << "hweight: " << hweight << endl;
 
 
       // EFT weights
-      float weight_local = -99; //default value fot cross check
+      double weight_local = -99.0; //default value for cross check
       for(unsigned int b=0; b<EFTWeightsNames_->size(); b++){
+
         if(weightName_local.EqualTo(EFTWeightsNames_->at(b))){
           weight_local = EFTWeights_->at(b);
-          hweight = (1. + weight_local);   // for EFT
+          // weight_local += 1.0;
+          hweight = hweight * weight_local;   // for EFT
+          EFTweight     ->Fill(weight_local,hweight);
+          EFTweight_pure->Fill(weight_local);
           // hweight = weight_local;              // for ALP
-          EFTweight->Fill(hweight);
           // cout << "       weightName_local: " << weightName_local << endl;
           // cout << "EFTWeightsNames_->at(b): " << EFTWeightsNames_->at(b) << endl;
           // cout << "           weight_local: " << weight_local << endl;
         }
       }
+      EFTweight_ditopmass->Fill(DiTopMass_->at(0),weight_local);
+      ditopmass_EFTweight->Fill(weight_local,DiTopMass_->at(0));
+      // if(weight_local < 1){
+      //   cout << "weight_local: " << weight_local << endl;
+      //   cout << "       #jets: " << nGenJets_ << endl;
+      //   if(nGenJets_ > 0){
+      //     cout << "GenJetpt_->at(0): " << GenJetpt_->at(0) << endl;
+      //   }
+      // }
 
 
       //jets
       N_jets->Fill(nGenJets_,hweight);
-      if(nGenJets_ > 0) pt_jet1->Fill(GenJetpt_->at(0),hweight);
+      if(nGenJets_ > 0){
+        // cout << "GenJetpt_->at(0): " << GenJetpt_->at(0) << endl;
+        pt_jet1->Fill(GenJetpt_->at(0),hweight);
+      }
       if(nGenJets_ > 1) pt_jet2->Fill(GenJetpt_->at(1),hweight);
       if(nGenJets_ > 2) pt_jet3->Fill(GenJetpt_->at(2),hweight);
       for(int j=0; j<nGenJets_; j++){
@@ -315,6 +342,7 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
         E_jet  ->Fill(GenJetenergy_->at(j),hweight);
         m_jet  ->Fill(GenJetmass_->at(j),hweight);
       }
+
       //top
       for(unsigned int j=0; j<TopPt_->size(); j++){
         // id_top    ->Fill(,hweight);
@@ -344,6 +372,7 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
         phi_W   ->Fill(WBosonPhi_->at(j),hweight);
         E_W     ->Fill(WBosonE_->at(j),hweight);
       }
+      // cout << endl;
     }
 
     cout << "----- 100% -----" << endl;
@@ -352,6 +381,7 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
     cout << "writing hists to root file..." << endl;
     // if(weightName_local.EndsWith("_min5p0"))
     v_hists.push_back(EFTweight);
+    v_hists.push_back(EFTweight_pure);
     v_hists.push_back(N_jets);
     v_hists.push_back(pt_jet1);
     v_hists.push_back(pt_jet2);
@@ -375,12 +405,20 @@ void SMEFTanalyzer::analyze(edm::Event const& iEvent, edm::EventSetup const& iSe
     v_hists.push_back(phi_W);
     v_hists.push_back(E_W);
 
+    v_2Dhists.push_back(EFTweight_ditopmass);
+    v_2Dhists.push_back(ditopmass_EFTweight);
+
     for(unsigned int a=0; a<v_hists.size(); a++){
       v_hists.at(a)->Write();
       v_hists.at(a)->Reset("M");
     };
 
-    cout << endl;
+    for(unsigned int a=0; a<v_2Dhists.size(); a++){
+      v_2Dhists.at(a)->Write();
+      v_2Dhists.at(a)->Reset("M");
+    };
+
+    // cout << endl;
   }
   output_file->Close();
 
